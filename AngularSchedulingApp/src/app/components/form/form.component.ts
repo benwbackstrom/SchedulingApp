@@ -19,7 +19,7 @@ export class FormComponent implements OnInit {
       firstName: ['', Validators.required],
       lastName: ['', Validators.required],
       email: ['', Validators.required], //Might have to validate if its a true email address
-      phoneNumber: ['', [Validators.required]]
+      phoneNumber: ['', [Validators.required, Validators.pattern(/^[+]?(1\-|1\s|1|\d{3}\-|\d{3}\s|)?((\(\d{3}\))|\d{3})(\-|\s)?(\d{3})(\-|\s)?(\d{4})$/g)]]
     })
   }
 
