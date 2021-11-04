@@ -19,14 +19,18 @@ export class FormComponent implements OnInit {
 
   ngOnInit(): void {
     this.informationForm = this.formBuilder.group({
-      firstName: [this.appointment.firstName, Validators.required],
-      lastName: [this.appointment.lastName, Validators.required],
-      email: [this.appointment.email, Validators.required] //Might have to validate if its a true email address
+      firstName: ['', Validators.required],
+      lastName: ['', Validators.required],
+      email: ['', Validators.required] //Might have to validate if its a true email address
     })
   }
 
   submitForm(){
-    console.log('Hello!'); //Here we will send the data to where it needs to go, and change views
+    this.appointment.firstName = this.informationForm.controls['firstName'].value;
+    this.appointment.lastName = this.informationForm.controls['lastName'].value;
+    this.appointment.email = this.informationForm.controls['email'].value;
+    
+    console.log(this.appointment); //Here we will send the data to where it needs to go, and change views
   }
 
 }
