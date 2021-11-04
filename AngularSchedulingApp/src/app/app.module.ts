@@ -6,12 +6,16 @@ import { RouterModule } from '@angular/router';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { FormComponent } from './components/form/form.component';
+import { ConfirmationComponent } from './components/confirmation/confirmation.component';
+
+import { ApptTransferService } from './services/appt-transfer.service';
 
 
 @NgModule({
   declarations: [
     AppComponent,
-    FormComponent
+    FormComponent,
+    ConfirmationComponent
   ],
   imports: [
     BrowserModule,
@@ -20,7 +24,9 @@ import { FormComponent } from './components/form/form.component';
     ReactiveFormsModule,
     RouterModule
   ],
-  providers: [],
+  providers: [
+    ApptTransferService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
