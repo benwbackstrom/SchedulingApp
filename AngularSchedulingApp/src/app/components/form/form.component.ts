@@ -18,7 +18,8 @@ export class FormComponent implements OnInit {
     this.informationForm = this.formBuilder.group({
       firstName: ['', Validators.required],
       lastName: ['', Validators.required],
-      email: ['', Validators.required] //Might have to validate if its a true email address
+      email: ['', Validators.required], //Might have to validate if its a true email address
+      phoneNumber: ['', [Validators.required]]
     })
   }
 
@@ -26,6 +27,7 @@ export class FormComponent implements OnInit {
     this.appointment.firstName = this.informationForm.controls['firstName'].value;
     this.appointment.lastName = this.informationForm.controls['lastName'].value;
     this.appointment.email = this.informationForm.controls['email'].value;
+    this.appointment.phoneNumber = this.informationForm.controls['phoneNumber'].value;
 
     console.log(this.appointment); //Here we will send the data to where it needs to go, and change views
   }
