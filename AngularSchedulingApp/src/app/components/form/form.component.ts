@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Appointment } from 'src/app/models/appointment';
 
 @Component({
   selector: 'app-form',
@@ -9,11 +10,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 export class FormComponent implements OnInit {
 
   public informationForm!: FormGroup;
-  appointment = {
-    firstName: '',
-    lastName: '',
-    email: ''
-  };
+  appointment: Appointment = new Appointment();
 
   constructor(private formBuilder: FormBuilder) { }
 
@@ -29,7 +26,7 @@ export class FormComponent implements OnInit {
     this.appointment.firstName = this.informationForm.controls['firstName'].value;
     this.appointment.lastName = this.informationForm.controls['lastName'].value;
     this.appointment.email = this.informationForm.controls['email'].value;
-    
+
     console.log(this.appointment); //Here we will send the data to where it needs to go, and change views
   }
 
