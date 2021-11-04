@@ -86,4 +86,19 @@ describe('FormComponent', () => {
     //Test passes if the form is invalid
   })
 
+  it('should save the appointment when submitted', async () => {
+    component.ngOnInit();
+    component.informationForm.controls['firstName'].setValue('John');
+    component.informationForm.controls['lastName'].setValue('Doe');
+    component.informationForm.controls['email'].setValue('jdoe@gmail.com');
+    component.informationForm.controls['phoneNumber'].setValue('1-234-567-8910');
+    
+    //we set up a valid form, and now we need to submit it
+    component.submitForm();
+
+    expect(component.appointment).toBeTruthy();
+    //Test passes if the appointment is not undefined
+
+  })
+
 });
