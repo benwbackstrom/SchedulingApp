@@ -38,7 +38,7 @@ export class FormComponent implements OnInit {
 
     //console.log(this.transferService.getAppt()); //Debugging statement
     
-    //this.router.navigate(['map']); //TODO: Make map component 
+    this.router.navigate(['map']);
     //This will take us to the map component view
   }
 

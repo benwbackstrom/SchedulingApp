@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Loader } from '@googlemaps/js-api-loader';
 import { Locationmodel } from 'src/app/models/locationmodel';
 import { MapserviceService } from 'src/app/services/mapservice.service';
+import { ApptTransferService } from 'src/app/services/appt-transfer.service';
 
 @Component({
   selector: 'app-locationmap',
@@ -10,7 +11,7 @@ import { MapserviceService } from 'src/app/services/mapservice.service';
 })
 export class LocationmapComponent implements OnInit {
 
-  constructor(private ms: MapserviceService){}
+  constructor(private ms: MapserviceService, private transferService: ApptTransferService){}
 
   public map:any; //variable stores the map object
   public myMarker:any; //stores a single marker of my location
@@ -57,6 +58,8 @@ export class LocationmapComponent implements OnInit {
       this.formatted_address = "New York, US";
       this.createMap(40.7128, -74.0060);
     }
+
+    //console.log(this.transferService.getAppt()); //Debugging: I wish to verify that it actually saves this
   }
 
   //creates a new Map
