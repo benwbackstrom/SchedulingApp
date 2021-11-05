@@ -31,11 +31,14 @@
                             <td class="col-lg-1">
                                 <h5>{{location.name}}</h5>
                             </td>
-                            <td class="col-sm-1">
+                            <td class="col-sm-2">
                                 <p>Address: {{location.formatted_address}}</p>
                             </td>
                             <td class="col-sm-1">
                                 <p>Distance: {{location.distance | meterToMile | number:'.2'}} miles</p>
+                            </td>
+                            <td class="col-sm-1" (click)="chooseLocation(location)">
+                                <button class="btn btn-dark">Choose</button>
                             </td>
                         </tr>
                     </table>

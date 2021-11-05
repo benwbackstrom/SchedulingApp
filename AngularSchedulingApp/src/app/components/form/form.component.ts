@@ -25,7 +25,7 @@ export class FormComponent implements OnInit {
     })
   }
 
-  submitForm(){
+  submitForm(): void {
     this.appointment.firstName = this.informationForm.controls['firstName'].value;
     this.appointment.lastName = this.informationForm.controls['lastName'].value;
     this.appointment.email = this.informationForm.controls['email'].value;
