@@ -11,6 +11,7 @@ import { ConfirmationComponent } from './components/confirmation/confirmation.co
 
 import { ApptTransferService } from './services/appt-transfer.service';
 import { LocationmapComponent } from './components/locationmap/locationmap.component';
+import { HttpClientModule } from '@angular/common/http';
 
 
 @NgModule({
@@ -26,7 +27,8 @@ import { LocationmapComponent } from './components/locationmap/locationmap.compo
     AppRoutingModule,
     FormsModule,
     ReactiveFormsModule,
-    RouterModule
+    RouterModule,
+    HttpClientModule
   ],
   providers: [
     ApptTransferService
