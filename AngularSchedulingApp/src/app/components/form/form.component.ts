@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Appointment } from 'src/app/models/appointment';
+import { ApptTransferService } from 'src/app/services/appt-transfer.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-form',
@@ -12,7 +14,7 @@ export class FormComponent implements OnInit {
   public informationForm!: FormGroup;
   appointment: Appointment = new Appointment();
 
-  constructor(private formBuilder: FormBuilder) { }
+  constructor(private formBuilder: FormBuilder, private transferService: ApptTransferService, private router: Router) { }
 
   ngOnInit(): void {
     this.informationForm = this.formBuilder.group({
@@ -29,7 +31,15 @@ export class FormComponent implements OnInit {
     this.appointment.email = this.informationForm.controls['email'].value;
     this.appointment.phoneNumber = this.informationForm.controls['phoneNumber'].value;
 
-    console.log(this.appointment); //Here we will send the data to where it needs to go, and change views
+    //console.log(this.appointment); //Debugging statement
+    //Here we will send the data to where it needs to go, and change views
+
+    this.transferService.setAppt(this.appointment); //gives our transfer service singleton the initial values
+
+    //console.log(this.transferService.getAppt()); //Debugging statement
+    
+    //this.router.navigate(['map']); //TODO: Make map component 
+    //This will take us to the map component view
   }
 
 }
