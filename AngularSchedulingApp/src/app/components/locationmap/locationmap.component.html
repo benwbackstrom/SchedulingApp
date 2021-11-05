@@ -20,9 +20,6 @@
                     <div class="full" id="map">
                     </div>
 
-                    <div class="text-center mt-4">
-                        <button class="btn btn-dark" (click)="createDistanceForArray()">Get Distance</button>
-                    </div>
                 </div>
 
             </div>
@@ -30,7 +27,7 @@
                 <hr>
                 <div *ngFor="let location of aptLocationArray">
                     <table>
-                        <tr>
+                        <tr (click)="changeMapCenter(location.lat, location.lng)">
                             <td>
                                 <h5>{{location.name}}</h5>
                             </td>
@@ -38,7 +35,7 @@
                                 <p>Address: {{location.formatted_address}}</p>
                             </td>
                             <td>
-                                <p>Distance: {{location.distance}} meters</p>
+                                <p>Distance: {{location.distance | meterToMile | number:'.2'}} miles</p>
                             </td>
                         </tr>
                     </table>

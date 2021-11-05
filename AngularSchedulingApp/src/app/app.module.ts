@@ -12,6 +12,7 @@ import { ConfirmationComponent } from './components/confirmation/confirmation.co
 import { ApptTransferService } from './services/appt-transfer.service';
 import { LocationmapComponent } from './components/locationmap/locationmap.component';
 import { HttpClientModule } from '@angular/common/http';
+import { MeterToMilePipe } from './pipes/meter-to-mile.pipe';
 
 
 @NgModule({
@@ -20,7 +21,8 @@ import { HttpClientModule } from '@angular/common/http';
     FormComponent,
     CalendarComponent,
     ConfirmationComponent,
-    LocationmapComponent
+    LocationmapComponent,
+    MeterToMilePipe
   ],
   imports: [
     BrowserModule,
