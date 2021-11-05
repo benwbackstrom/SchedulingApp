@@ -1,1 +1,56 @@
-<p>calendar works</p>
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-lg">
+            <div class="card shadow my-card">
+                <table class="table-fixed">
+                    <thead>
+                        <tr>
+                            <th> </th>
+                            <th *ngFor = "let appt of appointments"> <div>{{appt.dow}}</div> <div>{{appt.date}}</div></th>
+                        </tr>
+                    </thead>
+                    <tbody *ngFor="let time of times; let i = index">
+                        <tr>
+                            <td id="time{{i}}" class="time"> {{time}} </td>
+                            <td *ngFor="let appt of appointments" class="full"> <span *ngFor="let time of appt.times"><span *ngIf="rightTime(i, time)">
+                                <button *ngIf="!isSelected(appt, time)"(click)="selectBtn(appt, time)" class="btn my-btn">Register</button>
+                                <button *ngIf="isSelected(appt, time)" class="btn selected-btn">Register</button></span></span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="timeBlank"></td>
+                            <td class="blank" *ngFor="let appt of appointments"> <span *ngFor="let time of appt.times"><span *ngIf="rightTime(i+.5, time)">
+                                <button *ngIf="!isSelected(appt, time)"(click)="selectBtn(appt, time)" class="btn my-btn">Register</button>
+                                <button *ngIf="isSelected(appt, time)" class="btn selected-btn">Register</button></span></span>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- <div class="container mt-5">
+    <div class="row">
+        <div class="col-lg">
+            <div class="card shadow my-card">
+                <table>
+                    <tr>
+                        <th *ngFor="let appt of appointments">
+                            <div>{{appt.dow}}</div>
+                            <div>{{appt.date}}</div>
+                        </th>
+                    </tr>
+                    <tr>
+                        <td *ngFor = "let appt of appointments">
+                            <div class = "appt" *ngFor = "let time of appt.times">
+                                <button *ngIf="!isSelected(appt, time)"(click)="selectBtn(appt, time)" class="btn my-btn">{{time}}</button>
+                                <button *ngIf="isSelected(appt, time)" class="btn selected-btn">{{time}}</button>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div> 
+</div> -->

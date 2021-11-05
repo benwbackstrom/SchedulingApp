@@ -1,0 +1,81 @@
+/*
+    --accent: #801918;
+    --accentHover: #a02e2c;
+    --background: white;
+    --table: gray;
+    --tableOther: lightgray;
+*/
+
+table{
+    vertical-align: top;
+    text-align: center;
+    table-layout: fixed;
+    min-width: 1000px;
+}
+
+.full{
+    border-top: solid gray;
+    border-left: solid gray;
+    height: 2.5em;
+}
+
+.time{
+    border-top: solid gray;
+    height: 2.5em;
+}
+
+.timeBlank{
+    border-top: dashed lightgray;
+    height: 2.5em;
+}
+
+.blank{
+    border-top: dashed lightgray;
+    border-left: solid gray;
+    height: 2.5em;
+}
+
+th{
+    background-color: #801918;
+    color: white;
+    min-width:20px;
+}
+
+.my-btn{
+    border-radius: 20px;
+    border-color: #801918;
+    color: #801918;
+    border-width: 2px;
+}
+
+.my-btn:hover{
+    background-color: #a02e2c;
+    color: white;
+}
+
+.selected-btn{
+    border-radius: 20px;
+    border-color: #801918;
+    background-color: #801918;
+    color: white;
+    border-width: 2px;
+}
+
+.appt{
+    padding-bottom: 5px;
+}
+
+.my-card{
+    overflow-y: scroll;
+    height: 500px;
+}
+
+.table-fixed {
+    width: 100%;
+}
+
+.table-fixed thead th {
+    position: sticky;
+    position: -webkit-sticky;
+    top: 0;
+}
