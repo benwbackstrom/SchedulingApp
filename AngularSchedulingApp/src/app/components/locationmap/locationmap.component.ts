@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Loader } from '@googlemaps/js-api-loader';
+import { Locationmodel } from 'src/app/models/locationmodel';
 import { MapserviceService } from 'src/app/services/mapservice.service';
 
 @Component({
@@ -15,13 +16,24 @@ export class LocationmapComponent implements OnInit {
   public myMarker:any; //stores a single marker of my location
   public myLat: number = 0; //stores my Lat
   public myLng: number = 0; //stores my Lng
-  public address:string = "";//13307 Midway Rd Farmers Branch TX
-  public aptLocationArray:any[] = [{name:"Costco",lat:35.1257107, lng:-118.2644864},{name:"APP",lat:34.0750972, lng:-118.3026504},{name:"Cvs",lat:34.06168746948242, lng:-118.30403137207031}];
+  public formatted_address:string = "";//13307 Midway Rd Farmers Branch TX
+  public tempAddress:string = "";
+  public aptLocationProxyArray:any[] = [{name:"Costco", formatted_address:"2901 Los Feliz Blvd, Los Angeles, CA 90039", lat:34.128521, lng: -118.263657},
+                                        {name:"Walgreens",formatted_address: "3201 W 6th St, Los Angeles, CA 90020", lat:34.064510, lng:-118.292030},
+                                        {name:"Cvs",formatted_address:"4707 W N Venice Blvd, Los Angeles, CA 90019",lat:34.042250, lng:-118.365330},
+                                        {name:"BestBuy",formatted_address: "4255 Lyndon B Johnson Fwy, Farmers Branch, TX 75244", lat:32.927410, lng:-96.837310},
+                                        {name:"Walmart",formatted_address: "4122 Lyndon B Johnson Fwy, Dallas, TX 75244", lat:32.921832, lng:-96.840491},
+                                        {name:"Costco",formatted_address: "8055 Churchill Way, Dallas, TX 75251", lat:32.919567, lng:-96.768389}];
+  public aptLocationArray:any[] = [];
   public aptDisplayArray: any[] = [];
+  public aptDestArray: any[] = [];
   public aptDisplayNumber:number = 3;
 
 
   ngOnInit(): void {
+
+    //first we populate Array
+    this.populateLocationArray();
 
     if(confirm('Allow this application to know your location')){
       //Calls Http request for location from public IP
@@ -29,7 +41,8 @@ export class LocationmapComponent implements OnInit {
         (myInfo:any)=>{
           this.myLat = myInfo.latitude;
           this.myLng = myInfo.longitude;
-          console.log(myInfo);
+          this.formatted_address = myInfo.city + ", " + myInfo.region_code + ", " + myInfo.country_code + " " + myInfo.postal;
+          //console.log(this.formatted_address);
           this.createMap(this.myLat,this.myLng);
         },
         ()=>{
@@ -39,6 +52,9 @@ export class LocationmapComponent implements OnInit {
     }
     else{
       //default location New York
+      this.myLat = 40.7128;
+      this.myLng = -74.0060;
+      this.formatted_address = "New York, US";
       this.createMap(40.7128, -74.0060);
     }
   }
@@ -57,22 +73,64 @@ export class LocationmapComponent implements OnInit {
 
       this.myMarker = this.createMyMarker(Lat,Lng);
 
+      //first get distances for the Array
+      this.createDistanceForArray();
+      //console.log(this.aptLocationArray)
+      
+      let i = 0;
       for(let item of this.aptLocationArray){
-        this.aptDisplayArray.push(this.createMyMarker(item.lat, item.lng).setIcon("https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png"));
+        this.aptDestArray.push(this.createMyMarker(item.lat, item.lng).setIcon("https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png"));
+        /*this.aptDisplayArray.push(item);
+        i++;
+        if(i == this.aptDisplayNumber){
+          break;
+        }*/
       }
       
-
     });
-
   }
 
+  //creates Array with Distance modifier
+  createDistanceForArray():void{
+    let matrix = new google.maps.DistanceMatrixService();
+    matrix.getDistanceMatrix({
+      origins:[new google.maps.LatLng(this.myLat,this.myLng)],
+      destinations:this._createDestination(),
+      travelMode:google.maps.TravelMode.DRIVING
+    }, (response:any, status:any) =>{
+      console.log(response);
+      for(let i = 0; i < response.rows[0].elements.length; i++){
+        this.aptLocationArray[i].distance = Number(response.rows[0].elements[i].distance.value);
+      }
+      this._sortArrayDistance();
+      console.log(this.aptLocationArray);
+    });
+  }
+
+  _createDestination():any[]{
+    let latlng = [];
+    for(let location of this.aptLocationArray){
+      latlng.push(new google.maps.LatLng(location.lat,location.lng));
+    }
+    return latlng;
+  }
+
+  populateLocationArray():void{
+    for(let location of this.aptLocationProxyArray){
+      this.aptLocationArray.push(new Locationmodel(location.name, location.formatted_address, location.lat, location.lng, -1));
+    }
+    console.log(this.aptLocationArray);
+  }
+
+  //Interactive changing the address
   changeMap():void{
-    this.ms.getGeocode(this.address).subscribe(
+    this.ms.getGeocode(this.tempAddress).subscribe(
       (geocode:any)=>{
         console.log(geocode);
         this.myLat = geocode.results[0].geometry.location.lat;
         this.myLng = geocode.results[0].geometry.location.lng;
         this.changeMapCenter(this.myLat, this.myLng);
+        this.createDistanceForArray();
       },
       ()=>{
         console.log("Location not found!");
@@ -81,7 +139,6 @@ export class LocationmapComponent implements OnInit {
   }
 
   changeMapCenter(Lat:number,Lng:number):void{
-    console.log(Lat, Lng);
     this.map.setCenter({lat:Lat, lng:Lng});
     this.myMarker.setMap(null);
     this.createMyMarker(Lat,Lng);
@@ -93,6 +150,10 @@ export class LocationmapComponent implements OnInit {
       position:{lat: Lat, lng: Lng},
       map:this.map
     });
+  }
+
+  _sortArrayDistance(){
+    this.aptLocationArray.sort((a,b) => (a.distance > b.distance) ? 1 : -1);
   }
 
 }
