@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { FormComponent } from './components/form/form.component';
 import { ConfirmationComponent } from './components/confirmation/confirmation.component';
 import { CalendarComponent } from './components/calendar/calendar.component';
+import { LocationmapComponent } from './components/locationmap/locationmap.component';
 
 const routes: Routes = [
   {path: 'form', component: FormComponent },
@@ -12,6 +13,10 @@ const routes: Routes = [
     path: "calendar",
     component: CalendarComponent
   },
+  {
+    path:"map",
+    component: LocationmapComponent
+  }
 ];
 
 @NgModule({

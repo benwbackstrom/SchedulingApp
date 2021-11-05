@@ -10,6 +10,7 @@ import { CalendarComponent } from './components/calendar/calendar.component';
 import { ConfirmationComponent } from './components/confirmation/confirmation.component';
 
 import { ApptTransferService } from './services/appt-transfer.service';
+import { LocationmapComponent } from './components/locationmap/locationmap.component';
 
 
 @NgModule({
@@ -17,7 +18,8 @@ import { ApptTransferService } from './services/appt-transfer.service';
     AppComponent,
     FormComponent,
     CalendarComponent,
-    ConfirmationComponent
+    ConfirmationComponent,
+    LocationmapComponent
   ],
   imports: [
     BrowserModule,
