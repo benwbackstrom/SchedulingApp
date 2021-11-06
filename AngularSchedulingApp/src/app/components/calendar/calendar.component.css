@@ -49,6 +49,7 @@ th{
     color: rgb(133,153,173);
     background-color: #e4dfd994;
     border-width: 2px;
+    width: 100px;
 }
 
 .my-btn:hover{
@@ -62,6 +63,7 @@ th{
     background-color: rgb(133,153,173);
     color: #e2e3e2;
     border-width: 2px;
+    width: 100px;
 }
 
 .appt{

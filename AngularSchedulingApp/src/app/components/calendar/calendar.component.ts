@@ -39,8 +39,6 @@ export class CalendarComponent implements OnInit, AfterViewInit  {
     let element = document.getElementById(this.topTime);
     if(element){
       element.scrollIntoView();
-      // let rect = element.getBoundingClientRect();
-      // window.scrollTo(0, rect.top-70);
     }
   }
 
@@ -76,10 +74,10 @@ export class CalendarComponent implements OnInit, AfterViewInit  {
       num -= 12;
     }
     if(num%1 == 0){
-      time = num;
+      time = num + ":00";
     }
     else{
-      time = num + ":" + "30";
+      time = Math.floor(num) + ":30";
     }
     return time+ap;
   }
