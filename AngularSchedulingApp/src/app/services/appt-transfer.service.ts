@@ -45,7 +45,9 @@ export class ApptTransferService {
   getEndTime(): number {
     return this.desiredDateTimeRange.endTime;
   }
-
+  setDesiredDateTimeRange(desiredDateTimeRange: DateTimeRange): void {
+    this.desiredDateTimeRange = desiredDateTimeRange;
+  }
   getDesiredDateTimeRange(): DateTimeRange {
     return this.desiredDateTimeRange;
   }
