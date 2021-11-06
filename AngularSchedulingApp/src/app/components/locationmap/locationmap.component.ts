@@ -28,8 +28,11 @@ export class LocationmapComponent implements OnInit {
                                         {name:"Costco",formatted_address: "8055 Churchill Way, Dallas, TX 75251", lat:32.919567, lng:-96.768389}];
   public aptLocationArray:any[] = [];
   public aptDisplayArray: any[] = [];
-  public aptDestArray: any[] = [];
+  public aptDestArray: any[] = []; //holds all the markers for 
   public aptDisplayNumber:number = 40000;
+
+  private directionService:any;
+  private directionDisplay:any;
 
 
   ngOnInit(): void {
@@ -79,6 +82,10 @@ export class LocationmapComponent implements OnInit {
 
       //first get distances for the Array
       this.createDistanceForArray();
+
+      this.directionService = new google.maps.DirectionsService();
+      this.directionDisplay = new google.maps.DirectionsRenderer();
+      this.directionDisplay.setMap(this.map);
       //console.log(this.aptLocationArray)
 
     });
@@ -101,18 +108,27 @@ export class LocationmapComponent implements OnInit {
 
       this._sortArrayDistance();
 
+      for(let item of this.aptDestArray){
+        item.setMap(null);
+      }
+
       this.aptDisplayArray = [];
+      this.aptDestArray = [];
+
       for(let item of this.aptLocationArray){
         if(item.distance > this.aptDisplayNumber){
           break;
         }
         this.aptDisplayArray.push(item);
-        this.aptDestArray.push(this.createMyMarker(item.lat, item.lng).setIcon("https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png"));
+        let tempMarker = this.createMyMarker(item.lat, item.lng);
+        tempMarker.setIcon("https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png");
+        this.aptDestArray.push(tempMarker);
       }
-      console.log(this.aptLocationArray);
+      //console.log(this.aptLocationArray);
     });
   }
 
+  //helper function to create destination array in the form of google's latlng object
   _createDestination():any[]{
     let latlng = [];
     for(let location of this.aptLocationArray){
@@ -121,6 +137,7 @@ export class LocationmapComponent implements OnInit {
     return latlng;
   }
 
+  //populate new array in the beginning to have distance variable
   populateLocationArray():void{
     for(let location of this.aptLocationProxyArray){
       this.aptLocationArray.push(new Locationmodel(location.name, location.formatted_address, location.lat, location.lng, -1));
@@ -132,9 +149,10 @@ export class LocationmapComponent implements OnInit {
   changeMap():void{
     this.ms.getGeocode(this.tempAddress).subscribe(
       (geocode:any)=>{
-        console.log(geocode);
+        //console.log(geocode);
         this.myLat = geocode.results[0].geometry.location.lat;
         this.myLng = geocode.results[0].geometry.location.lng;
+        this.directionDisplay.setDirections({routes: []});
         this.changeMapCenter(this.myLat, this.myLng);
         this.createDistanceForArray();
       },
@@ -147,11 +165,23 @@ export class LocationmapComponent implements OnInit {
   changeMapCenter(Lat:number,Lng:number):void{
     this.map.setCenter({lat:Lat, lng:Lng});
     this.myMarker.setMap(null);
-    this.createMyMarker(Lat,Lng);
+    this.myMarker = this.createMyMarker(Lat,Lng);
+    //console.log("My marker " + this.myMarker)
   }
 
   changeViewCenter(Lat:number,Lng:number):void{
-    this.map.setCenter({lat:Lat, lng:Lng});
+
+    let destination = new google.maps.LatLng(Lat,Lng);
+    let request = {
+      origin: new google.maps.LatLng(this.myLat,this.myLng),
+      destination: destination,
+      travelMode:google.maps.TravelMode.DRIVING
+    }
+    this.directionService.route(request, (response:any, status:any) =>{
+      console.log(response);
+      this.directionDisplay.setDirections(response);
+    });
+    //const calculateDirections = (thi)
   }
 
   //create marker based on location
