@@ -44,7 +44,7 @@ describe('FormComponent', () => {
     el = fixture.debugElement.query(By.css('button')).nativeElement;
     el.click();
     expect(component.submitForm).toHaveBeenCalledTimes(0);
-    //Test passes if the submitForm method is called
+    //Test passes if the submitForm method is called 0 times as it should be disabled
   });
 
   it('form should be invalid', async () => {
