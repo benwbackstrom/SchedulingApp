@@ -19,7 +19,13 @@
                     <div class="text-center mt-4">
                         <div class="full" id="map">
                         </div>
+                    </div>
 
+                    <div class="col-sm-1">
+                        <button class="btn my-btn chooseLocation" (click)="resetMap()">Reset Maps</button>
+                    </div>
+                    <div class="col-sm-1">
+                        <button class="btn my-btn chooseLocation" (click)="goLocation()" *ngIf="storeLocation != null">Go</button>
                     </div>
 
                 </div>
@@ -27,7 +33,7 @@
                     <hr>
                     <div *ngFor="let location of aptDisplayArray">
                         <table id="locationTable">
-                            <tr (click)="changeViewCenter(location.lat, location.lng)">
+                            <tr (click)="changeViewCenter(location)">
                                 <td class="col-lg-1">
                                     <h5>{{location.name}}</h5>
                                 </td>
@@ -37,8 +43,8 @@
                                 <td class="col-sm-1">
                                     <p>Distance: {{location.distance | meterToMile | number:'.2'}} miles</p>
                                 </td>
-                                <td class="col-sm-1" (click)="chooseLocation(location)">
-                                    <button class="btn my-btn chooseLocation">Choose</button>
+                                <td class="col-sm-1">
+                                    <button class="btn my-btn chooseLocation" (click)="chooseLocation(location)">Choose</button>
                                 </td>
                             </tr>
                         </table>

@@ -33,6 +33,7 @@ export class LocationmapComponent implements OnInit {
 
   private directionService:any;
   private directionDisplay:any;
+  public storeLocation:any = null;
 
 
   ngOnInit(): void {
@@ -122,9 +123,19 @@ export class LocationmapComponent implements OnInit {
         this.aptDisplayArray.push(item);
         let tempMarker = this.createMyMarker(item.lat, item.lng);
         tempMarker.setIcon("https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png");
+        this._addInfoListener(item.name, tempMarker);
         this.aptDestArray.push(tempMarker);
       }
       //console.log(this.aptLocationArray);
+    });
+  }
+
+  _addInfoListener(content:string, marker:any):void{
+    var infoWindow = new google.maps.InfoWindow();
+    marker.addListener('click', () =>{
+      infoWindow.close();
+      infoWindow.setContent(content);
+      infoWindow.open(this.map,marker);
     });
   }
 
@@ -153,6 +164,7 @@ export class LocationmapComponent implements OnInit {
         this.myLat = geocode.results[0].geometry.location.lat;
         this.myLng = geocode.results[0].geometry.location.lng;
         this.directionDisplay.setDirections({routes: []});
+        this.storeLocation = null;
         this.changeMapCenter(this.myLat, this.myLng);
         this.createDistanceForArray();
       },
@@ -169,9 +181,9 @@ export class LocationmapComponent implements OnInit {
     //console.log("My marker " + this.myMarker)
   }
 
-  changeViewCenter(Lat:number,Lng:number):void{
+  changeViewCenter(location:any):void{
 
-    let destination = new google.maps.LatLng(Lat,Lng);
+    let destination = new google.maps.LatLng(location.lat,location.lng);
     let request = {
       origin: new google.maps.LatLng(this.myLat,this.myLng),
       destination: destination,
@@ -180,6 +192,7 @@ export class LocationmapComponent implements OnInit {
     this.directionService.route(request, (response:any, status:any) =>{
       console.log(response);
       this.directionDisplay.setDirections(response);
+      this.storeLocation = location;
     });
     //const calculateDirections = (thi)
   }
@@ -204,7 +217,19 @@ export class LocationmapComponent implements OnInit {
 
     this.router.navigate(['datetime']);
     //This will take us to the calendar component view
+  }
 
+  resetMap():void{
+    this.directionDisplay.setDirections({routes: []});
+    this.map.setCenter({lat:this.myLat, lng:this.myLng});
+    this.storeLocation = null;
+  }
+  goLocation():void{
+    this.transferService.setApptLocation(this.storeLocation.formatted_address);
+    //console.log(this.transferService.getAppt()); //Debugging statement
+
+    this.router.navigate(['datetime']);
+    //This will take us to the calendar component view
   }
 
 }
