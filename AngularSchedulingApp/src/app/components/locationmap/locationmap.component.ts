@@ -3,6 +3,7 @@ import { Loader } from '@googlemaps/js-api-loader';
 import { Locationmodel } from 'src/app/models/locationmodel';
 import { MapserviceService } from 'src/app/services/mapservice.service';
 import { ApptTransferService } from 'src/app/services/appt-transfer.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-locationmap',
@@ -11,7 +12,7 @@ import { ApptTransferService } from 'src/app/services/appt-transfer.service';
 })
 export class LocationmapComponent implements OnInit {
 
-  constructor(private ms: MapserviceService, private transferService: ApptTransferService){}
+  constructor(private ms: MapserviceService, private transferService: ApptTransferService, private router: Router){}
 
   public map:any; //variable stores the map object
   public myMarker:any; //stores a single marker of my location
@@ -157,6 +158,17 @@ export class LocationmapComponent implements OnInit {
 
   _sortArrayDistance(){
     this.aptLocationArray.sort((a,b) => (a.distance > b.distance) ? 1 : -1);
+  }
+
+  chooseLocation(location: any): void{
+    //This method will actually populate the appointment location and send to the next page
+
+    this.transferService.setApptLocation(location.formatted_address);
+    //console.log(this.transferService.getAppt()); //Debugging statement
+
+    this.router.navigate(['calendar']);
+    //This will take us to the calendar component view
+
   }
 
 }
