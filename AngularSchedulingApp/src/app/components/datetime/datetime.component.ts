@@ -22,6 +22,11 @@ export class DatetimeComponent implements OnInit {
   public startTimes: number[] = [];
   public endTimes: number[] = [];
 
+  // placeholder location start and end
+  // would be using the selected location's start & end times
+  public locationStartTime = 9;
+  public locationEndTime = 17;
+
   constructor(private formBuilder: FormBuilder, private router: Router) { }
 
   ngOnInit(): void {
@@ -92,7 +97,7 @@ export class DatetimeComponent implements OnInit {
 
       if (selectedValue != null && selectedValue != "" && new Date(this.convertDateString(selectedValue)) >= this.currentDate) {
         // update starting times
-        this.addStartTimes();
+        this.addStartTimes(this.locationStartTime, this.locationEndTime);
         // show starting times
         this.showSelectStartTime = true;
       } else {
@@ -112,7 +117,7 @@ export class DatetimeComponent implements OnInit {
       // clear end time
       this.dateForm.get('endTime')?.reset();
       
-      this.addEndTimes(parseFloat(selectedValue));
+      this.addEndTimes(parseFloat(selectedValue), this.locationEndTime);
       this.showSelectEndTime = true;
     });
   }
@@ -126,19 +131,22 @@ export class DatetimeComponent implements OnInit {
   }
 
   // adds start times to the respective select input
-  addStartTimes() {
+  addStartTimes(locationOpenTime:number, locationCloseTime:number) {
     // array of valid starting times
-    let validStartTimes = [8, 9, 10, 11, 12, 13, 14, 15, 16];
+    let validStartTimes = [];
+    for (let i = locationOpenTime; i < locationCloseTime; i+= 0.5) {
+      validStartTimes.push(i)
+    }
     this.startTimes = validStartTimes;
   }
 
   // adds end times to the respective select input
-  addEndTimes(startTime:number) {
+  addEndTimes(startTime:number, locationCloseTime:number) {
 
     let validEndTimes = [];
 
-    // loop through and get the valid ending times (up to closing [5:00PM, or 17])
-    for (let i = startTime+1; i <= 17; i++) {
+    // loop through and get the valid ending times
+    for (let i = startTime+0.5; i <= locationCloseTime; i+= 0.5) {
       validEndTimes.push(i);
     }
 
