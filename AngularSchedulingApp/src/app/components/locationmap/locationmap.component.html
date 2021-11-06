@@ -25,9 +25,9 @@
                 </div>
                 <div class="card-body">
                     <hr>
-                    <div *ngFor="let location of aptLocationArray">
+                    <div *ngFor="let location of aptDisplayArray">
                         <table id="locationTable">
-                            <tr (click)="changeMapCenter(location.lat, location.lng)">
+                            <tr (click)="changeViewCenter(location.lat, location.lng)">
                                 <td class="col-lg-1">
                                     <h5>{{location.name}}</h5>
                                 </td>
@@ -38,7 +38,7 @@
                                     <p>Distance: {{location.distance | meterToMile | number:'.2'}} miles</p>
                                 </td>
                                 <td class="col-sm-1" (click)="chooseLocation(location)">
-                                    <button class="btn my-btn">Choose</button>
+                                    <button class="btn my-btn chooseLocation">Choose</button>
                                 </td>
                             </tr>
                         </table>

@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { endDateValidator, startDateValidator } from 'src/app/directives/restricted-datetimes.directive';
+import { DateTimeRange } from 'src/app/models/date-time-range';
 
 @Component({
   selector: 'app-datetime',
@@ -10,6 +12,8 @@ import { Router } from '@angular/router';
 export class DatetimeComponent implements OnInit {
 
   public dateForm!: FormGroup;
+
+  desiredDateTimeRange: DateTimeRange = new DateTimeRange(); 
 
   public showSelectEndDate: boolean = false;
   public showSelectStartTime: boolean = false;
@@ -21,14 +25,25 @@ export class DatetimeComponent implements OnInit {
   public startTimes: number[] = [];
   public endTimes: number[] = [];
 
+  // placeholder location start and end
+  // would be using the selected location's start & end times
+  public locationStartTime = 9;
+  public locationEndTime = 17;
+
   constructor(private formBuilder: FormBuilder, private router: Router) { }
 
   ngOnInit(): void {
     // make form
     this.dateForm = this.formBuilder.group({
-      startDate: ['', Validators.required],
-      endDate: ['', Validators.required],
+      // check if start date is today or later
+      startDate: ['', [Validators.required, startDateValidator()]],
+
+      // check if end date is start date or later
+      endDate: ['', [Validators.required, endDateValidator(this.startDate)]],
+
       startTime: ['', Validators.required],
+
+      // check if end time is after start time
       endTime: ['', Validators.required]
     });
 
@@ -85,7 +100,7 @@ export class DatetimeComponent implements OnInit {
 
       if (selectedValue != null && selectedValue != "" && new Date(this.convertDateString(selectedValue)) >= this.currentDate) {
         // update starting times
-        this.addStartTimes();
+        this.addStartTimes(this.locationStartTime, this.locationEndTime);
         // show starting times
         this.showSelectStartTime = true;
       } else {
@@ -105,33 +120,46 @@ export class DatetimeComponent implements OnInit {
       // clear end time
       this.dateForm.get('endTime')?.reset();
       
-      this.addEndTimes(parseFloat(selectedValue));
+      this.addEndTimes(parseFloat(selectedValue), this.locationEndTime);
       this.showSelectEndTime = true;
     });
   }
 
   // submit just logs the data at the moment
   submitDateForm() {
+    // log for testing purposes 
     console.log(`Starting date: ${this.dateForm.controls['startDate'].value}`);
     console.log(`Ending date: ${this.dateForm.controls['endDate'].value}`);
     console.log(`Starting time: ${this.dateForm.controls['startTime'].value}`);
     console.log(`Ending time: ${this.dateForm.controls['endTime'].value}`);
+    
+    // set the model's fields using the form
+    this.desiredDateTimeRange.setStartDate(this.dateForm.controls['startDate'].value.replace(/-/g,'/')); // string replace to convert MM-dd-YYYY to MM/dd/YYYY
+    this.desiredDateTimeRange.setEndDate(this.dateForm.controls['endDate'].value.replace(/-/g,'/'));
+    this.desiredDateTimeRange.setStartTime(this.dateForm.controls['startTime'].value);
+    this.desiredDateTimeRange.setEndTime(this.dateForm.controls['endTime'].value);
+
+    // log for testing purposes
+    console.log(this.desiredDateTimeRange);
   }
 
   // adds start times to the respective select input
-  addStartTimes() {
+  addStartTimes(locationOpenTime:number, locationCloseTime:number) {
     // array of valid starting times
-    let validStartTimes = [8, 9, 10, 11, 12, 13, 14, 15, 16];
+    let validStartTimes = [];
+    for (let i = locationOpenTime; i < locationCloseTime; i+= 0.5) {
+      validStartTimes.push(i)
+    }
     this.startTimes = validStartTimes;
   }
 
   // adds end times to the respective select input
-  addEndTimes(startTime:number) {
+  addEndTimes(startTime:number, locationCloseTime:number) {
 
     let validEndTimes = [];
 
-    // loop through and get the valid ending times (up to closing [5:00PM, or 17])
-    for (let i = startTime+1; i <= 17; i++) {
+    // loop through and get the valid ending times
+    for (let i = startTime+0.5; i <= locationCloseTime; i+= 0.5) {
       validEndTimes.push(i);
     }
 
