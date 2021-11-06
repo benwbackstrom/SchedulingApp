@@ -31,15 +31,14 @@ export class CalendarComponent implements OnInit, AfterViewInit  {
     this.appointments.push( {"dow": this.getDOW(this.time3), "date": this.getMyDate(this.time3), times: [14, 15.5, 16.5, 17, 17.5]});
     this.appointments.push( {"dow": this.getDOW(this.time4), "date": this.getMyDate(this.time4), times: []});
     this.appointments.push( {"dow": this.getDOW(this.time5), "date": this.getMyDate(this.time5), times: [14, 15.5, 16.5, 17, 17.5]});
-    //this.appointments.push( {"dow": this.getDOW(this.time6), "date": this.getMyDate(this.time6), times: [14, 15.5, 16.5, 17, 17.5]});
+    this.appointments.push( {"dow": this.getDOW(this.time6), "date": this.getMyDate(this.time6), times: [14, 15.5, 16.5, 17, 17.5]});
+    this.appointments.push( {"dow": this.getDOW(this.time7), "date": this.getMyDate(this.time7), times: [14, 15.5, 16.5, 17, 17.5]});
   }
 
   ngAfterViewInit() {
     let element = document.getElementById(this.topTime);
     if(element){
       element.scrollIntoView();
-      // let rect = element.getBoundingClientRect();
-      // window.scrollTo(0, rect.top-70);
     }
   }
 
@@ -75,10 +74,10 @@ export class CalendarComponent implements OnInit, AfterViewInit  {
       num -= 12;
     }
     if(num%1 == 0){
-      time = num;
+      time = num + ":00";
     }
     else{
-      time = num + ":" + "30";
+      time = Math.floor(num) + ":30";
     }
     return time+ap;
   }

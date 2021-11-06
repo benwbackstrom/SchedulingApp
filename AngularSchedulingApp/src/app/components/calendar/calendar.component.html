@@ -2,7 +2,7 @@
     <div class="row">
         <div class="col-lg">
             <div class="card shadow my-card">
-                <table class="table-fixed">
+                <table class="table-fixed table-style">
                     <thead>
                         <tr>
                             <th> </th>
@@ -13,15 +13,15 @@
                         <tr>
                             <td id="time{{i}}" class="time"> {{time}} </td>
                             <td *ngFor="let appt of appointments" class="full"> <span *ngFor="let time of appt.times"><span *ngIf="rightTime(i, time)">
-                                <button *ngIf="!isSelected(appt, time)"(click)="selectBtn(appt, time)" class="btn my-btn">Register</button>
-                                <button *ngIf="isSelected(appt, time)" class="btn selected-btn">Register</button></span></span>
+                                <button *ngIf="!isSelected(appt, time)"(click)="selectBtn(appt, time)" class="btn my-btn">{{numToTime(time)}}</button>
+                                <button *ngIf="isSelected(appt, time)" class="btn selected-btn">{{numToTime(time)}}</button></span></span>
                             </td>
                         </tr>
                         <tr>
                             <td class="timeBlank"></td>
                             <td class="blank" *ngFor="let appt of appointments"> <span *ngFor="let time of appt.times"><span *ngIf="rightTime(i+.5, time)">
-                                <button *ngIf="!isSelected(appt, time)"(click)="selectBtn(appt, time)" class="btn my-btn">Register</button>
-                                <button *ngIf="isSelected(appt, time)" class="btn selected-btn">Register</button></span></span>
+                                <button *ngIf="!isSelected(appt, time)"(click)="selectBtn(appt, time)" class="btn my-btn">{{numToTime(time)}}</button>
+                                <button *ngIf="isSelected(appt, time)" class="btn selected-btn">{{numToTime(time)}}</button></span></span>
                             </td>
                         </tr>
                     </tbody>
