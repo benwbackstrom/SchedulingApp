@@ -1,0 +1,15 @@
+.full {
+    width:400px;
+    height: 400px;
+}
+
+#locationTable {
+    border-style: double;
+    border-width: 3px;
+}
+
+/*This way we better let the user know they can click a location on the table to recenter*/
+tr:hover {
+    background-color: black;
+    color: aliceblue;
+}

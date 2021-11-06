@@ -1,0 +1,51 @@
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-lg">
+            <div class="card shadow my-card">
+                <div class="card-body">
+
+                    <div class="input-group mb-3">
+                        <input type="text" [(ngModel)] = "tempAddress">
+                    </div>
+
+                    <div class="text-center mt-4">
+                        <button class="btn btn-dark" (click)="changeMap()">SEARCH</button>
+                    </div>
+
+                    <br>
+                    <hr>
+                    <br>
+
+                    <div class="text-center mt-4">
+                        <div class="full" id="map">
+                        </div>
+
+                    </div>
+
+                </div>
+                <div class="card-body">
+                    <hr>
+                    <div *ngFor="let location of aptDisplayArray">
+                        <table id="locationTable">
+                            <tr (click)="changeViewCenter(location.lat, location.lng)">
+                                <td class="col-lg-1">
+                                    <h5>{{location.name}}</h5>
+                                </td>
+                                <td class="col-sm-2">
+                                    <p>Address: {{location.formatted_address}}</p>
+                                </td>
+                                <td class="col-sm-1">
+                                    <p>Distance: {{location.distance | meterToMile | number:'.2'}} miles</p>
+                                </td>
+                                <td class="col-sm-1" (click)="chooseLocation(location)">
+                                    <button class="btn my-btn chooseLocation">Choose</button>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
