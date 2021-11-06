@@ -42,4 +42,8 @@ export class FormComponent implements OnInit {
     //This will take us to the map component view
   }
 
+  nextPage():void{
+    this.router.navigate(['/map']);
+  }
+
 }

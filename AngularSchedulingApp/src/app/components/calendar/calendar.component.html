@@ -13,15 +13,13 @@
                         <tr>
                             <td id="time{{i}}" class="time"> {{time}} </td>
                             <td *ngFor="let appt of appointments" class="full"> <span *ngFor="let time of appt.times"><span *ngIf="rightTime(i, time)">
-                                <button *ngIf="!isSelected(appt, time)"(click)="selectBtn(appt, time)" class="btn my-btn">{{numToTime(time)}}</button>
-                                <button *ngIf="isSelected(appt, time)" class="btn selected-btn">{{numToTime(time)}}</button></span></span>
+                                <button (click)="nextPage()" class="btn my-btn">{{time | militaryToRegularTime}}</button></span></span>
                             </td>
                         </tr>
                         <tr>
                             <td class="timeBlank"></td>
                             <td class="blank" *ngFor="let appt of appointments"> <span *ngFor="let time of appt.times"><span *ngIf="rightTime(i+.5, time)">
-                                <button *ngIf="!isSelected(appt, time)"(click)="selectBtn(appt, time)" class="btn my-btn">{{numToTime(time)}}</button>
-                                <button *ngIf="isSelected(appt, time)" class="btn selected-btn">{{numToTime(time)}}</button></span></span>
+                                <button (click)="nextPage()" class="btn my-btn">{{time | militaryToRegularTime}}</button></span></span>
                             </td>
                         </tr>
                     </tbody>

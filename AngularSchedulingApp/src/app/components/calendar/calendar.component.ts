@@ -1,5 +1,6 @@
 import { getLocaleDateTimeFormat } from '@angular/common';
 import { AfterViewInit, Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-calendar',
@@ -22,7 +23,7 @@ export class CalendarComponent implements OnInit, AfterViewInit  {
   selectedTime:string = "";
   topTime:string = "time8";
 
-  constructor() { }
+  constructor(private router: Router) { }
 
   ngOnInit(): void {
     
@@ -101,5 +102,9 @@ export class CalendarComponent implements OnInit, AfterViewInit  {
 
   rightTime(id:any, time:any):boolean{
     return id == time;
+  }
+
+  nextPage():void{
+    this.router.navigate(["confirm"]);
   }
 }

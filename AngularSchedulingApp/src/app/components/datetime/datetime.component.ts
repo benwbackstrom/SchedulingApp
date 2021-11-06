@@ -146,4 +146,8 @@ export class DatetimeComponent implements OnInit {
     let arr = dateString.split("-");
     return `${arr.splice(4,6)}/${arr.slice(6,8)}/${arr.slice(0,4)}`
   }
+
+  nextPage():void{
+    this.router.navigate(["calendar"]);
+  }
 }
