@@ -9,6 +9,7 @@ import { FormComponent } from './components/form/form.component';
 import { ConfirmationComponent } from './components/confirmation/confirmation.component';
 
 import { ApptTransferService } from './services/appt-transfer.service';
+import { ConfirmationService } from './services/confirmation.service';
 
 
 @NgModule({
@@ -25,7 +26,8 @@ import { ApptTransferService } from './services/appt-transfer.service';
     RouterModule
   ],
   providers: [
-    ApptTransferService
+    ApptTransferService,
+    ConfirmationService
   ],
   bootstrap: [AppComponent]
 })

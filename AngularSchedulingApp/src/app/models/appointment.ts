@@ -1,4 +1,5 @@
 export class Appointment {
+    booked: boolean = false;    //initialized false in case there is an error in calendar
     firstName!: string;
     lastName!: string;
     email!: string;
