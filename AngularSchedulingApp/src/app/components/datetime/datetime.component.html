@@ -5,45 +5,70 @@
         <!-- right now on submit it only logs the user's input info -->
         <form [formGroup]="dateForm" class="p-1" (ngSubmit)="submitDateForm()">
 
-            <!-- Start Date -->
-            <label class="d-block" for="startDate">Start Date</label>
-            <input formControlName="startDate" id="startDate" type="date" min="{{currentDate | date:'YYYY-MM-dd'}}" class="form-control">
-
-            <!-- End Date -->
-            <div *ngIf="showSelectEndDate; else elseBlockForEndDate">
-                <label class="" for="endDate">End Date</label>
-                <input formControlName="endDate" id="endDate" type="date" min="{{startDate | date:'YYYY-MM-dd'}}" class="form-control">
-            </div>
-            <ng-template #elseBlockForEndDate>
-                <label class="" for="endDateElse">End Date</label>
-                <input id="endDateElse" type="date" class="form-control" disabled>
-            </ng-template>
             
-            <!-- Start Time -->
-            <div *ngIf="showSelectStartTime; else elseBlockForStartTime">
-                <label for="startTime">Start Time</label>
-                <select class="form-select" formControlName="startTime" name="startTime" id="startTime">
-                    <option *ngFor="let time of startTimes" [value]="time">{{ time | militaryToRegularTime }}</option>
-                </select>
-            </div>
-            <ng-template #elseBlockForStartTime>
-                <label for="startTime">Start Time</label>
-                <select class="form-select" id="startTimeElse" disabled>
-                </select>
-            </ng-template>
+            <div class="d-flex pt-2">
+                <!-- Start Date -->
+                <div class="w-50">
+                    <label class="d-block text-center" for="startDate">Start Date</label>
+                    <input formControlName="startDate" id="startDate" type="date" min="{{currentDate | date:'YYYY-MM-dd'}}" class="form-control">
+                </div>
 
-            <!-- End Time -->
-            <div *ngIf="showSelectEndTime; else elseBlockForEndTime">
-                <label for="endTime">End Time</label>
-                <select class="form-select" formControlName="endTime" name="endTime" id="endTime">
-                    <option *ngFor="let time of endTimes" [value]="time">{{ time | militaryToRegularTime }}</option>
-                </select>
+                <!-- Divider -->
+                <div class="d-flex align-items-end px-2">
+                    <h3>-</h3>
+                </div>
+
+                <div class="w-50">
+                    <!-- End Date -->
+                    <div *ngIf="showSelectEndDate; else elseBlockForEndDate">
+                        <label class="d-block text-center" for="endDate">End Date</label>
+                        <input formControlName="endDate" id="endDate" type="date" min="{{startDate | date:'YYYY-MM-dd'}}" class="form-control">
+                    </div>
+                    <ng-template #elseBlockForEndDate>
+                        <label class="d-block text-center" for="endDateElse">End Date</label>
+                        <input id="endDateElse" type="date" class="form-control" disabled>
+                    </ng-template>
+                </div>
             </div>
-            <ng-template #elseBlockForEndTime>
-                <label for="endTimeElse">End Time</label>
-                <select class="form-select" id="endTimeElse" disabled>
-                </select>
-            </ng-template>
+            
+
+            
+            <div class="d-flex pt-4">
+                <!-- Start Time -->
+                <div class="w-50">
+                    <div *ngIf="showSelectStartTime; else elseBlockForStartTime">
+                        <label class="d-block text-center" for="startTime">Start Time</label>
+                        <select class="form-select" formControlName="startTime" name="startTime" id="startTime">
+                            <option *ngFor="let time of startTimes" [value]="time">{{ time | militaryToRegularTime }}</option>
+                        </select>
+                    </div>
+                    <ng-template #elseBlockForStartTime>
+                        <label class="d-block text-center" for="startTime">Start Time</label>
+                        <select class="form-select" id="startTimeElse" disabled>
+                        </select>
+                    </ng-template>
+                </div>
+
+                <!-- Divider -->
+                <div class="d-flex align-items-end mx-2">
+                    <h3>-</h3>
+                </div>
+
+                <!-- End Time -->
+                <div class="w-50">
+                    <div *ngIf="showSelectEndTime; else elseBlockForEndTime">
+                        <label class="d-block text-center" for="endTime">End Time</label>
+                        <select class="form-select" formControlName="endTime" name="endTime" id="endTime">
+                            <option *ngFor="let time of endTimes" [value]="time">{{ time | militaryToRegularTime }}</option>
+                        </select>
+                    </div>
+                    <ng-template #elseBlockForEndTime>
+                        <label class="d-block text-center" for="endTimeElse">End Time</label>
+                        <select class="form-select" id="endTimeElse" disabled>
+                        </select>
+                    </ng-template>
+                </div>
+            </div>
 
             <!-- Submit -->
             <div class="text-center mt-3">
