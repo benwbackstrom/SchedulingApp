@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Appointment } from '../models/appointment';
+import { DateTimeRange } from '../models/date-time-range';
 
 @Injectable({
   providedIn: 'root'
@@ -7,6 +8,7 @@ import { Appointment } from '../models/appointment';
 export class ApptTransferService {
   
   private appointment:Appointment = new Appointment();
+  private desiredDateTimeRange:DateTimeRange = new DateTimeRange(); 
 
   constructor() { }
 
@@ -28,5 +30,23 @@ export class ApptTransferService {
 
   getAppt(): Appointment{
     return this.appointment;
+  }
+
+  // date-time-range functions
+  getStartDate(): Date {
+    return this.desiredDateTimeRange.startDate;
+  }
+  getEndDate(): Date {
+    return this.desiredDateTimeRange.endDate;
+  }
+  getStartTime(): number {
+    return this.desiredDateTimeRange.startTime;
+  }
+  getEndTime(): number {
+    return this.desiredDateTimeRange.endTime;
+  }
+
+  getDesiredDateTimeRange(): DateTimeRange {
+    return this.desiredDateTimeRange;
   }
 }

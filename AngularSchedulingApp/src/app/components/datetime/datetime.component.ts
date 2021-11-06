@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { endDateValidator, startDateValidator } from 'src/app/directives/restricted-datetimes.directive';
+import { DateTimeRange } from 'src/app/models/date-time-range';
 
 @Component({
   selector: 'app-datetime',
@@ -11,6 +12,8 @@ import { endDateValidator, startDateValidator } from 'src/app/directives/restric
 export class DatetimeComponent implements OnInit {
 
   public dateForm!: FormGroup;
+
+  desiredDateTimeRange: DateTimeRange = new DateTimeRange(); 
 
   public showSelectEndDate: boolean = false;
   public showSelectStartTime: boolean = false;
@@ -124,10 +127,20 @@ export class DatetimeComponent implements OnInit {
 
   // submit just logs the data at the moment
   submitDateForm() {
+    // log for testing purposes 
     console.log(`Starting date: ${this.dateForm.controls['startDate'].value}`);
     console.log(`Ending date: ${this.dateForm.controls['endDate'].value}`);
     console.log(`Starting time: ${this.dateForm.controls['startTime'].value}`);
     console.log(`Ending time: ${this.dateForm.controls['endTime'].value}`);
+    
+    // set the model's fields using the form
+    this.desiredDateTimeRange.setStartDate(this.dateForm.controls['startDate'].value.replace(/-/g,'/')); // string replace to convert MM-dd-YYYY to MM/dd/YYYY
+    this.desiredDateTimeRange.setEndDate(this.dateForm.controls['endDate'].value.replace(/-/g,'/'));
+    this.desiredDateTimeRange.setStartTime(this.dateForm.controls['startTime'].value);
+    this.desiredDateTimeRange.setEndTime(this.dateForm.controls['endTime'].value);
+
+    // log for testing purposes
+    console.log(this.desiredDateTimeRange);
   }
 
   // adds start times to the respective select input
