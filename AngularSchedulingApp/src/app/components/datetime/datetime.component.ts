@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { endDateValidator, startDateValidator } from 'src/app/directives/restricted-datetimes.directive';
 
 @Component({
   selector: 'app-datetime',
@@ -26,9 +27,15 @@ export class DatetimeComponent implements OnInit {
   ngOnInit(): void {
     // make form
     this.dateForm = this.formBuilder.group({
-      startDate: ['', Validators.required],
-      endDate: ['', Validators.required],
+      // check if start date is today or later
+      startDate: ['', [Validators.required, startDateValidator()]],
+
+      // check if end date is start date or later
+      endDate: ['', [Validators.required, endDateValidator(this.startDate)]],
+
       startTime: ['', Validators.required],
+
+      // check if end time is after start time
       endTime: ['', Validators.required]
     });
 
