@@ -31,7 +31,8 @@ export class CalendarComponent implements OnInit, AfterViewInit  {
     this.appointments.push( {"dow": this.getDOW(this.time3), "date": this.getMyDate(this.time3), times: [14, 15.5, 16.5, 17, 17.5]});
     this.appointments.push( {"dow": this.getDOW(this.time4), "date": this.getMyDate(this.time4), times: []});
     this.appointments.push( {"dow": this.getDOW(this.time5), "date": this.getMyDate(this.time5), times: [14, 15.5, 16.5, 17, 17.5]});
-    //this.appointments.push( {"dow": this.getDOW(this.time6), "date": this.getMyDate(this.time6), times: [14, 15.5, 16.5, 17, 17.5]});
+    this.appointments.push( {"dow": this.getDOW(this.time6), "date": this.getMyDate(this.time6), times: [14, 15.5, 16.5, 17, 17.5]});
+    this.appointments.push( {"dow": this.getDOW(this.time7), "date": this.getMyDate(this.time7), times: [14, 15.5, 16.5, 17, 17.5]});
   }
 
   ngAfterViewInit() {

@@ -1,1 +1,41 @@
 /* You can add global styles to this file, and also import other style files */
+body{
+    color: #f7f8f9;
+    background: url(assets/background3.jpg) no-repeat center center fixed; 
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+}
+
+a{
+    text-decoration: none;
+    color: rgb(133,153,173);
+    padding-left: 10px;
+}
+
+a:hover{
+    color: rgb(104, 126, 148);
+}
+
+.my-btn{
+    border-radius: 20px;
+    border-color: rgb(133,153,173);
+    background-color: rgb(133,153,173);
+    color: white;
+    border-width: 2px;
+    width: 100px;
+}
+
+.my-btn:hover{
+    color: white;
+    border-color: rgb(104, 126, 148);
+    background-color: rgb(104, 126, 148);
+}
+
+.my-card{
+    background-color: rgba(255, 255, 255, 0.15);
+    color: rgb(133,153,173);
+    backdrop-filter: blur(8px); 
+    padding: 10px;
+}
