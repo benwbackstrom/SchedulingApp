@@ -29,7 +29,7 @@ export class LocationmapComponent implements OnInit {
   public aptLocationArray:any[] = [];
   public aptDisplayArray: any[] = [];
   public aptDestArray: any[] = [];
-  public aptDisplayNumber:number = 3;
+  public aptDisplayNumber:number = 40000;
 
 
   ngOnInit(): void {
@@ -80,17 +80,7 @@ export class LocationmapComponent implements OnInit {
       //first get distances for the Array
       this.createDistanceForArray();
       //console.log(this.aptLocationArray)
-      
-      let i = 0;
-      for(let item of this.aptLocationArray){
-        this.aptDestArray.push(this.createMyMarker(item.lat, item.lng).setIcon("https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png"));
-        /*this.aptDisplayArray.push(item);
-        i++;
-        if(i == this.aptDisplayNumber){
-          break;
-        }*/
-      }
-      
+
     });
   }
 
@@ -98,15 +88,27 @@ export class LocationmapComponent implements OnInit {
   createDistanceForArray():void{
     let matrix = new google.maps.DistanceMatrixService();
     matrix.getDistanceMatrix({
+
       origins:[new google.maps.LatLng(this.myLat,this.myLng)],
       destinations:this._createDestination(),
       travelMode:google.maps.TravelMode.DRIVING
+
     }, (response:any, status:any) =>{
-      console.log(response);
+
       for(let i = 0; i < response.rows[0].elements.length; i++){
         this.aptLocationArray[i].distance = Number(response.rows[0].elements[i].distance.value);
       }
+
       this._sortArrayDistance();
+
+      this.aptDisplayArray = [];
+      for(let item of this.aptLocationArray){
+        if(item.distance > this.aptDisplayNumber){
+          break;
+        }
+        this.aptDisplayArray.push(item);
+        this.aptDestArray.push(this.createMyMarker(item.lat, item.lng).setIcon("https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png"));
+      }
       console.log(this.aptLocationArray);
     });
   }
@@ -148,6 +150,10 @@ export class LocationmapComponent implements OnInit {
     this.createMyMarker(Lat,Lng);
   }
 
+  changeViewCenter(Lat:number,Lng:number):void{
+    this.map.setCenter({lat:Lat, lng:Lng});
+  }
+
   //create marker based on location
   createMyMarker(Lat:number,Lng:number):any{
     return new google.maps.Marker({
@@ -166,7 +172,7 @@ export class LocationmapComponent implements OnInit {
     this.transferService.setApptLocation(location.formatted_address);
     //console.log(this.transferService.getAppt()); //Debugging statement
 
-    this.router.navigate(['calendar']);
+    this.router.navigate(['datetime']);
     //This will take us to the calendar component view
 
   }
