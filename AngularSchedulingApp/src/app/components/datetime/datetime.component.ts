@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { endDateValidator, startDateValidator } from 'src/app/directives/restricted-datetimes.directive';
 import { DateTimeRange } from 'src/app/models/date-time-range';
+import { ApptTransferService } from 'src/app/services/appt-transfer.service';
 
 @Component({
   selector: 'app-datetime',
@@ -30,7 +31,7 @@ export class DatetimeComponent implements OnInit {
   public locationStartTime = 9;
   public locationEndTime = 17;
 
-  constructor(private formBuilder: FormBuilder, private router: Router) { }
+  constructor(private formBuilder: FormBuilder, private router: Router, private transferService: ApptTransferService) { }
 
   ngOnInit(): void {
     // make form
@@ -127,7 +128,8 @@ export class DatetimeComponent implements OnInit {
 
   // submit just logs the data at the moment
   submitDateForm() {
-    // log for testing purposes 
+    // log for testing purposes
+    console.log("User Input Date: ")
     console.log(`Starting date: ${this.dateForm.controls['startDate'].value}`);
     console.log(`Ending date: ${this.dateForm.controls['endDate'].value}`);
     console.log(`Starting time: ${this.dateForm.controls['startTime'].value}`);
@@ -139,8 +141,13 @@ export class DatetimeComponent implements OnInit {
     this.desiredDateTimeRange.setStartTime(this.dateForm.controls['startTime'].value);
     this.desiredDateTimeRange.setEndTime(this.dateForm.controls['endTime'].value);
 
+    // set the model in the transfer service
+    this.transferService.setDesiredDateTimeRange(this.desiredDateTimeRange);
+
     // log for testing purposes
-    console.log(this.desiredDateTimeRange);
+    console.log("Transfer Service Data: ")
+    console.log(this.transferService.getAppt());
+    console.log(this.transferService.getDesiredDateTimeRange());
   }
 
   // adds start times to the respective select input
