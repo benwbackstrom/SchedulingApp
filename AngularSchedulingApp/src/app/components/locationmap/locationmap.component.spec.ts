@@ -33,15 +33,23 @@ describe('LocationmapComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should call the changeMapCenter method', async () => {
-    spyOn(component, 'changeMapCenter');
+  it('should call the changeViewCenter method', async () => {
+    //In order to make sure that the tr is shown, we must have it at least have some values
+    component.tempAddress = 'Los Angeles';
+    component.changeMap();
+
+    spyOn(component, 'changeViewCenter');
     el = fixture.debugElement.query(By.css('tr')).nativeElement;
     el.click();
-    expect(component.changeMapCenter).toHaveBeenCalledTimes(1);
+    expect(component.changeViewCenter).toHaveBeenCalledTimes(1);
     //Test passes if the method has been called
   })
 
   it('should call the chooseLocation method', async () => {
+    //In order to make sure that the element is shown, we must have it at least have some values
+    component.tempAddress = 'Los Angeles';
+    component.changeMap();
+    
     spyOn(component, 'chooseLocation');
     el = fixture.debugElement.query(By.css('.chooseLocation')).nativeElement;
     //must choose this one by class since there are multiple buttons in the template
@@ -55,6 +63,14 @@ describe('LocationmapComponent', () => {
     el = fixture.debugElement.query(By.css('button')).nativeElement;
     el.click();
     expect(component.changeMap).toHaveBeenCalledTimes(1);
+    //Test passes if the method has been called
+  })
+
+  it('should call the resetMap method', async () => {
+    spyOn(component, 'resetMap');
+    el = fixture.debugElement.query(By.css('.resetMap')).nativeElement;
+    el.click();
+    expect(component.resetMap).toHaveBeenCalledTimes(1);
     //Test passes if the method has been called
   })
 
