@@ -172,7 +172,7 @@ export class LocationmapComponent implements OnInit {
     this.transferService.setApptLocation(location.formatted_address);
     //console.log(this.transferService.getAppt()); //Debugging statement
 
-    this.router.navigate(['calendar']);
+    this.router.navigate(['datetime']);
     //This will take us to the calendar component view
 
   }
