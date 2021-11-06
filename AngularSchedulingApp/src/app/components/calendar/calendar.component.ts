@@ -1,6 +1,7 @@
 import { getLocaleDateTimeFormat } from '@angular/common';
 import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { ApptTransferService } from 'src/app/services/appt-transfer.service';
 
 @Component({
   selector: 'app-calendar',
@@ -23,17 +24,17 @@ export class CalendarComponent implements OnInit, AfterViewInit  {
   selectedTime:string = "";
   topTime:string = "time8";
 
-  constructor(private router: Router) { }
+  constructor(private router: Router, private transferService: ApptTransferService, ) { }
 
   ngOnInit(): void {
     
-    this.appointments.push( {"dow": this.getDOW(this.time1), "date": this.getMyDate(this.time1), times: [9, 9.5, 14, 15]});
-    this.appointments.push( {"dow": this.getDOW(this.time2), "date": this.getMyDate(this.time2), times: [14, 15.5, 16.5, 17, 17.5]});
-    this.appointments.push( {"dow": this.getDOW(this.time3), "date": this.getMyDate(this.time3), times: [14, 15.5, 16.5, 17, 17.5]});
-    this.appointments.push( {"dow": this.getDOW(this.time4), "date": this.getMyDate(this.time4), times: []});
-    this.appointments.push( {"dow": this.getDOW(this.time5), "date": this.getMyDate(this.time5), times: [14, 15.5, 16.5, 17, 17.5]});
-    this.appointments.push( {"dow": this.getDOW(this.time6), "date": this.getMyDate(this.time6), times: [14, 15.5, 16.5, 17, 17.5]});
-    this.appointments.push( {"dow": this.getDOW(this.time7), "date": this.getMyDate(this.time7), times: [14, 15.5, 16.5, 17, 17.5]});
+    this.appointments.push( {"year": this.time1.getFullYear(), "dow": this.getDOW(this.time1), "date": this.getMyDate(this.time1), times: [9, 9.5, 14, 15]});
+    this.appointments.push( {"year": this.time2.getFullYear(), "dow": this.getDOW(this.time2), "date": this.getMyDate(this.time2), times: [14, 15.5, 16.5, 17, 17.5]});
+    this.appointments.push( {"year": this.time3.getFullYear(), "dow": this.getDOW(this.time3), "date": this.getMyDate(this.time3), times: [14, 15.5, 16.5, 17, 17.5]});
+    this.appointments.push( {"year": this.time4.getFullYear(),"dow": this.getDOW(this.time4), "date": this.getMyDate(this.time4), times: []});
+    this.appointments.push( {"year": this.time5.getFullYear(),"dow": this.getDOW(this.time5), "date": this.getMyDate(this.time5), times: [14, 15.5, 16.5, 17, 17.5]});
+    this.appointments.push( {"year": this.time6.getFullYear(), "dow": this.getDOW(this.time6), "date": this.getMyDate(this.time6), times: [14, 15.5, 16.5, 17, 17.5]});
+    this.appointments.push( {"year": this.time7.getFullYear(), "dow": this.getDOW(this.time7), "date": this.getMyDate(this.time7), times: [14, 15.5, 16.5, 17, 17.5]});
   }
 
   ngAfterViewInit() {
@@ -67,22 +68,6 @@ export class CalendarComponent implements OnInit, AfterViewInit  {
     return "ERROR";
   }
 
-  numToTime(num:any):String{
-    let time="";
-    let ap = "am";
-    if(num>12){
-      ap="pm";
-      num -= 12;
-    }
-    if(num%1 == 0){
-      time = num + ":00";
-    }
-    else{
-      time = Math.floor(num) + ":30";
-    }
-    return time+ap;
-  }
-
   setTopTime(id:number){
     let num = Math.floor(id) - 1;
     if(num < 0){
@@ -91,20 +76,14 @@ export class CalendarComponent implements OnInit, AfterViewInit  {
     this.topTime = "time" + num;
   }
 
-  selectBtn(appt:any, time:any):void{
-    this.selectedAppt=appt;
-    this.selectedTime = time;
-  }
-  
-  isSelected(appt:any, time:any):boolean{
-    return (time== this.selectedTime) && (appt == this.selectedAppt);
-  }
-
   rightTime(id:any, time:any):boolean{
     return id == time;
   }
 
-  nextPage():void{
+  nextPage(time:any, appt:any):void{
+    this.transferService.setApptDate(appt.date + "/"+appt.year);
+    console.log(appt.date + "/"+appt.year);
+    this.transferService.setApptTime(time);
     this.router.navigate(["confirm"]);
   }
 }

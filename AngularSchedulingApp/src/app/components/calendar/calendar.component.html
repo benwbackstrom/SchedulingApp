@@ -13,13 +13,13 @@
                         <tr>
                             <td id="time{{i}}" class="time"> {{time}} </td>
                             <td *ngFor="let appt of appointments" class="full"> <span *ngFor="let time of appt.times"><span *ngIf="rightTime(i, time)">
-                                <button (click)="nextPage()" class="btn my-btn">{{time | militaryToRegularTime}}</button></span></span>
+                                <button (click)="nextPage(i, appt)" class="btn my-btn">{{time | militaryToRegularTime}}</button></span></span>
                             </td>
                         </tr>
                         <tr>
                             <td class="timeBlank"></td>
                             <td class="blank" *ngFor="let appt of appointments"> <span *ngFor="let time of appt.times"><span *ngIf="rightTime(i+.5, time)">
-                                <button (click)="nextPage()" class="btn my-btn">{{time | militaryToRegularTime}}</button></span></span>
+                                <button (click)="nextPage(i+.5, appt)" class="btn my-btn">{{time | militaryToRegularTime}}</button></span></span>
                             </td>
                         </tr>
                     </tbody>

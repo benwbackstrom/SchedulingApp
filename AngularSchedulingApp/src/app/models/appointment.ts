@@ -7,5 +7,5 @@ export class Appointment {
     //For now I have these as strings, but they may be better as other variables
     location!: string;
     date!: string;
-    time!: string;
+    time!: number;
 }
