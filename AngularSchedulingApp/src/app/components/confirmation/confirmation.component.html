@@ -34,7 +34,7 @@
                             <label for="email">Email</label>
                             <input formControlName="email" id="email" type="text" placeholder="jdoe@gmail.com" class="form-control">
                         </div>
-                        <!-- We can put in more, but these for sure should be put in this form -->
+                        <div *ngIf="transComplete" class="text-danger p-2">appointment submission successful</div><!--temp confirmation of complete transaction-->
                         <div class="row p-5">
                             <div class="col-4">
                                 <div class="text-center">
