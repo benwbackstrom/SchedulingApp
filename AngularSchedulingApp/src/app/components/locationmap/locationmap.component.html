@@ -25,9 +25,9 @@
                 </div>
                 <div class="card-body">
                     <hr>
-                    <div *ngFor="let location of aptLocationArray">
+                    <div *ngFor="let location of aptDisplayArray">
                         <table id="locationTable">
-                            <tr (click)="changeMapCenter(location.lat, location.lng)">
+                            <tr (click)="changeViewCenter(location.lat, location.lng)">
                                 <td class="col-lg-1">
                                     <h5>{{location.name}}</h5>
                                 </td>
