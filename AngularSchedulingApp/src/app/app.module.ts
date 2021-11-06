@@ -13,6 +13,8 @@ import { ApptTransferService } from './services/appt-transfer.service';
 import { LocationmapComponent } from './components/locationmap/locationmap.component';
 import { HttpClientModule } from '@angular/common/http';
 import { MeterToMilePipe } from './pipes/meter-to-mile.pipe';
+import { DatetimeComponent } from './components/datetime/datetime.component';
+import { MilitaryToRegularTimePipe } from './pipes/military-to-regular-time.pipe';
 
 
 @NgModule({
@@ -22,7 +24,9 @@ import { MeterToMilePipe } from './pipes/meter-to-mile.pipe';
     CalendarComponent,
     ConfirmationComponent,
     LocationmapComponent,
-    MeterToMilePipe
+    MeterToMilePipe,
+    DatetimeComponent,
+    MilitaryToRegularTimePipe
   ],
   imports: [
     BrowserModule,
