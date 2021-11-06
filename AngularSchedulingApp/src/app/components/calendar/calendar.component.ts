@@ -20,14 +20,24 @@ export class CalendarComponent implements OnInit, AfterViewInit  {
 
   times = ["12am", "1am", "2am", "3am", "4am", "5am", "6am", "7am", "8am", "9am", "10am", "11am", "12pm", "1pm", "2pm", "3pm", "4pm", "5pm", "6pm", "7pm", "8pm", "9pm", "10pm", "11pm"];
   appointments:any = [];
-  selectedAppt:any = {};
-  selectedTime:string = "";
   topTime:string = "time8";
 
   constructor(private router: Router, private transferService: ApptTransferService, ) { }
 
   ngOnInit(): void {
-    
+    // let startD = this.transferService.getStartDate();
+    // console.log("Start Date:" + startD);
+    // let endD = this.transferService.getEndDate();
+    // let rangeD = this.getDateRange(startD, endD);
+    // let startT = this.transferService.getStartTime();
+    // this.setTopTime(startT);
+    // let endT = this.transferService.getEndTime();
+    // let rangeT = this.getTimeRange(startT, endT);
+    // for(let date in rangeD){
+    //   console.log(date);
+    //   console.log(typeof(date));
+    //   // this.appointments.push({"year": date.getFullYear(), "dow": this.getDOW(date), "date": this.getMyDate(this.time1), times: [9, 9.5, 14, 15]});
+    // }
     this.appointments.push( {"year": this.time1.getFullYear(), "dow": this.getDOW(this.time1), "date": this.getMyDate(this.time1), times: [9, 9.5, 14, 15]});
     this.appointments.push( {"year": this.time2.getFullYear(), "dow": this.getDOW(this.time2), "date": this.getMyDate(this.time2), times: [14, 15.5, 16.5, 17, 17.5]});
     this.appointments.push( {"year": this.time3.getFullYear(), "dow": this.getDOW(this.time3), "date": this.getMyDate(this.time3), times: [14, 15.5, 16.5, 17, 17.5]});
@@ -42,6 +52,26 @@ export class CalendarComponent implements OnInit, AfterViewInit  {
     if(element){
       element.scrollIntoView();
     }
+  }
+
+  getDateRange(start:Date, end:Date): any{
+    let range = new Array();
+    let current = start;
+    while (current <= end) {
+        range.push(new Date (current));
+        current.setDate(current.getDate() + 1);
+    }
+    return range;
+  }
+
+  getTimeRange(start:number, end:number): any{
+    let range = new Array();
+    let current = start;
+    while (current <= end) {
+        range.push(new Date (current));
+        current += .5;
+    }
+    return range;
   }
 
   getMyDate(data:Date): string{
@@ -82,7 +112,6 @@ export class CalendarComponent implements OnInit, AfterViewInit  {
 
   nextPage(time:any, appt:any):void{
     this.transferService.setApptDate(appt.date + "/"+appt.year);
-    console.log(appt.date + "/"+appt.year);
     this.transferService.setApptTime(time);
     this.router.navigate(["confirm"]);
   }
