@@ -17,7 +17,9 @@ export class MilitaryToRegularTimePipe implements PipeTransform {
       ap="PM";
       value -= 12;
     }
-
+    if (value == 12) {
+      ap = "PM";
+    }
     if (value % 1 == 0) {
       time = value + ":00";
     }
