@@ -20,7 +20,7 @@ export class ApptTransferService {
     this.appointment.date = date;
   }
 
-  setApptTime(time:string): void{
+  setApptTime(time:number): void{
     this.appointment.time = time;
   }
 

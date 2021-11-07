@@ -10,9 +10,9 @@ const routes: Routes = [
   {path: 'form', component: FormComponent },
   {path: '', redirectTo: '/form', pathMatch: 'full'},
   {path: 'confirm', component: ConfirmationComponent},
-  {path: "calendar", component: CalendarComponent},
-  {path:"map", component: LocationmapComponent},
-  {path:"datetime", component: DatetimeComponent}
+  {path: 'calendar', component: CalendarComponent},
+  {path: 'map', component: LocationmapComponent},
+  {path: 'datetime', component: DatetimeComponent}
 ];
 
 @NgModule({
