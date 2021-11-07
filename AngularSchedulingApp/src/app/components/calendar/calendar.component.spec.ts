@@ -1,4 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { RouterTestingModule } from '@angular/router/testing';
+import { MilitaryToRegularTimePipe } from 'src/app/pipes/military-to-regular-time.pipe';
 
 import { CalendarComponent } from './calendar.component';
 
@@ -8,7 +10,13 @@ describe('CalendarComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ CalendarComponent ]
+      declarations: [ 
+        CalendarComponent,
+        MilitaryToRegularTimePipe
+       ],
+      imports: [
+        RouterTestingModule
+      ]
     })
     .compileComponents();
   });
