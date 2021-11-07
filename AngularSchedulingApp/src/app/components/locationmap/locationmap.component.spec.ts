@@ -6,6 +6,7 @@ import { FormsModule } from '@angular/forms';
 
 import { LocationmapComponent } from './locationmap.component';
 import { MeterToMilePipe } from 'src/app/pipes/meter-to-mile.pipe';
+import { Locationmodel } from 'src/app/models/locationmodel';
 
 describe('LocationmapComponent', () => {
   let component: LocationmapComponent;
@@ -74,6 +75,17 @@ describe('LocationmapComponent', () => {
     el = fixture.debugElement.query(By.css('.resetMap')).nativeElement;
     el.click();
     expect(component.resetMap).toHaveBeenCalledTimes(1);
+    //Test passes if the method has been called
+  })
+
+  it('should call the goLocation method', async () => {
+    component.storeLocation = new Locationmodel("Costco", "8055 Churchill Way, Dallas, TX 75251", 32.919567, -96.768389, 10); //just making a location to make this nonnull
+    fixture.detectChanges();
+
+    spyOn(component, 'goLocation');
+    el = fixture.debugElement.query(By.css('.goLocation')).nativeElement;
+    el.click();
+    expect(component.goLocation).toHaveBeenCalledTimes(1);
     //Test passes if the method has been called
   })
 
