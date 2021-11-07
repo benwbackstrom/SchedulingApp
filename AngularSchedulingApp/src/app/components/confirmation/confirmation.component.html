@@ -2,7 +2,7 @@
     <div class="row">
         <div class="col-lg">
             <div class="card shadow my-card">
-                <div class="form">
+                <div *ngIf="!transComplete" class="form">
                     <h3>Confirm and submit your appointment information</h3>
                     <form [formGroup]="informationForm" class="p-1" (ngSubmit)="submitForm()">
                         <div>
@@ -34,7 +34,7 @@
                             <label for="email">Email</label>
                             <input formControlName="email" id="email" type="text" placeholder="jdoe@gmail.com" class="form-control">
                         </div>
-                        <div *ngIf="transComplete" class="text-danger p-2">appointment submission successful</div><!--temp confirmation of complete transaction-->
+                        <div *ngIf="postError" class="text-danger">An error has occurred. Please try again.</div>
                         <div class="row p-5">
                             <div class="col-4">
                                 <div class="text-center">
@@ -53,6 +53,15 @@
                             </div>
                         </div>
                     </form>
+                </div>
+                <div *ngIf="transComplete">
+                    <h3>Your passport services appointment has been set!</h3>
+                    <div class="pb-2">your appointment information:</div>
+                    <div>For: {{appointment.firstName}} {{appointment.lastName}}</div>
+                    <div>Travel to: {{appointment.location}}</div>
+                    <div>On: {{appointment.date}}</div>
+                    <div class="pb-2">Arrive at: {{appointment.time}}</div>
+                    <div>An email confirmation has been sent to {{appointment.email}}</div>
                 </div>
             </div>
         </div>

@@ -10,7 +10,6 @@ import { CalendarComponent } from './components/calendar/calendar.component';
 import { ConfirmationComponent } from './components/confirmation/confirmation.component';
 
 import { ApptTransferService } from './services/appt-transfer.service';
-import { ConfirmationService } from './services/confirmation.service';
 import { LocationmapComponent } from './components/locationmap/locationmap.component';
 import { HttpClientModule } from '@angular/common/http';
 import { MeterToMilePipe } from './pipes/meter-to-mile.pipe';
@@ -39,7 +38,6 @@ import { MilitaryToRegularTimePipe } from './pipes/military-to-regular-time.pipe
   ],
   providers: [
     ApptTransferService,
-    ConfirmationService
   ],
   bootstrap: [AppComponent]
 })

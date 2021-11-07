@@ -8,12 +8,14 @@ import { Appointment } from '../models/appointment';
 })
 export class ConfirmationService {
 
+  private readonly postURL = "http://localhost:3000/appointments";
+
   constructor(private http:HttpClient) { }
 
   postAppt(appt:Appointment):Observable<any>{     //post appointment to server
-    const httpheader = new HttpHeaders(           //TODO move url to const variable
-      { 'Content-Type' : 'application/json' }
+    const httpheader = new HttpHeaders(           
+      { 'Content-Type' : 'application/json' }     //header needed for json-server post
     );
-    return this.http.post("http://localhost:3000/appointments", appt, {headers: httpheader});
+    return this.http.post(this.postURL, appt, {headers: httpheader});
   }
 }

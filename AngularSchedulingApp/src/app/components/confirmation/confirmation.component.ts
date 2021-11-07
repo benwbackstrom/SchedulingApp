@@ -13,8 +13,9 @@ import { ConfirmationService } from 'src/app/services/confirmation.service';
 export class ConfirmationComponent implements OnInit {
 
   public informationForm!: FormGroup;
-  appointment:Appointment = new Appointment();
-  transComplete:boolean = false;
+  public appointment:Appointment = new Appointment();
+  public transComplete:boolean = false;
+  public postError: boolean = false;
 
   constructor(
     private apptTransfer:ApptTransferService,
@@ -41,25 +42,47 @@ export class ConfirmationComponent implements OnInit {
     });
   }
 
-  submitForm(){                     //on sumbit adjust appointment object and send to confirm service
-    console.log(this.appointment);                                    //temp log for troubleshooting
-    this.appointment.booked = true;                               
+  submitForm(){                     //on submit adjust appointment object and send to confirm service
+    console.log(this.appointment);                                    //temp log for troubleshooting                               
+    this.updateInitialFormInfo();
+    this.appointment.booked = true;
+    this.confirmServ.postAppt(this.appointment).subscribe(data => {
+      console.log(data);                                              //temp log for troubleshooting
+      this.apptTransfer.setAppt(this.appointment);                 
+      this.displaySummary();                                          
+      this.sendConfirmationEmail();                                                                                                                                                 
+    }, error => {                 //if error, appt is not marked as booked. display message or redirect?
+      this.appointment.booked = false;
+      this.apptTransfer.setAppt(this.appointment);                                
+      console.log(error);                                             //temp log for troubleshooting
+      this.postError = true;
+    });
+  }
+
+  displaySummary(): void{
+    this.transComplete = true;
+    //display reformatting can go here otherwise maybe move above line back to submitForm
+  }
+
+  sendConfirmationEmail(): void{
+    //looks like this will be an http request, but still looking into it
+  }
+
+  navToMap(): void{
+    this.updateInitialFormInfo();                  //route back to map component to select new location
+    console.log("navToMap called");
+  }
+  
+  navToCalendar(): void{
+    this.updateInitialFormInfo();                  //route back to calendar component to select new date/time
+    console.log("navToCalendar called");
+  }
+
+  updateInitialFormInfo(): void{
     this.appointment.firstName = this.informationForm.controls['firstName'].value;
     this.appointment.lastName = this.informationForm.controls['lastName'].value;
     this.appointment.email = this.informationForm.controls['email'].value;
     this.appointment.phoneNumber = this.informationForm.controls['phoneNumber'].value;
-    this.confirmServ.postAppt(this.appointment).subscribe(data => {
-      console.log(data);                                              //temp log for troubleshooting
-      this.transComplete = true;    //after http response, conclude appointment process
-                                    //TODO add error handling and route to final view
-    });
-  }
-
-  navToMap(){                       //route back to map component to select new location
-    console.log("navToMap called");
-  }
-  
-  navToCalendar(){                  //route back to calendar componenet to select new location
-    console.log("navToCalendar called");
+    this.apptTransfer.setAppt(this.appointment);
   }
 }
