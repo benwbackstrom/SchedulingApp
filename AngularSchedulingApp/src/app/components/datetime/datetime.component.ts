@@ -148,6 +148,9 @@ export class DatetimeComponent implements OnInit {
     console.log("Transfer Service Data: ")
     console.log(this.transferService.getAppt());
     console.log(this.transferService.getDesiredDateTimeRange());
+
+    // go to next page
+    this.nextPage();
   }
 
   // adds start times to the respective select input
