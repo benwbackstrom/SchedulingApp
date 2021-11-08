@@ -20,16 +20,10 @@ export class LocationmapComponent implements OnInit {
   public myLng: number = 0; //stores my Lng
   public formatted_address:string = "";//13307 Midway Rd Farmers Branch TX
   public tempAddress:string = "";
-  public aptLocationProxyArray:any[] = [{name:"Costco", formatted_address:"2901 Los Feliz Blvd, Los Angeles, CA 90039", lat:34.128521, lng: -118.263657},
-                                        {name:"Walgreens",formatted_address: "3201 W 6th St, Los Angeles, CA 90020", lat:34.064510, lng:-118.292030},
-                                        {name:"Cvs",formatted_address:"4707 W N Venice Blvd, Los Angeles, CA 90019",lat:34.042250, lng:-118.365330},
-                                        {name:"BestBuy",formatted_address: "4255 Lyndon B Johnson Fwy, Farmers Branch, TX 75244", lat:32.927410, lng:-96.837310},
-                                        {name:"Walmart",formatted_address: "4122 Lyndon B Johnson Fwy, Dallas, TX 75244", lat:32.921832, lng:-96.840491},
-                                        {name:"Costco",formatted_address: "8055 Churchill Way, Dallas, TX 75251", lat:32.919567, lng:-96.768389}];
   public aptLocationArray:any[] = [];
   public aptDisplayArray: any[] = [];
   public aptDestArray: any[] = []; //holds all the markers for 
-  public aptDisplayNumber:number = 40000;
+  public aptDisplayNumber:number = 400000;//40000
 
   private directionService:any;
   private directionDisplay:any;
@@ -39,33 +33,21 @@ export class LocationmapComponent implements OnInit {
   ngOnInit(): void {
 
     //first we populate Array
-    this.populateLocationArray();
-
-    if(confirm('Allow this application to know your location')){
-      //Calls Http request for location from public IP
-      this.ms.getMyLocation().subscribe(
-        (myInfo:any)=>{
-          this.myLat = myInfo.latitude;
-          this.myLng = myInfo.longitude;
-          this.formatted_address = myInfo.city + ", " + myInfo.region_code + ", " + myInfo.country_code + " " + myInfo.postal;
-          //console.log(this.formatted_address);
-          this.createMap(this.myLat,this.myLng);
-        },
-        ()=>{
-          console.log("Location not found!");
-        }
-      );
-    }
-    else{
-      //default location New York
-      this.myLat = 40.7128;
-      this.myLng = -74.0060;
-      this.formatted_address = "New York, US";
-      this.createMap(40.7128, -74.0060);
-    }
+    this.ms.getAddresses().subscribe(
+      (addressArray:any)=>{
+        console.log(addressArray);
+        this.populateLocationArray(addressArray);
+        this.myLat = 40.7128;
+        this.myLng = -74.0060;
+        this.formatted_address = "New York, US";
+        this.createMap(40.7128, -74.0060);
+      }
+    );
 
     //console.log(this.transferService.getAppt()); //Debugging: I wish to verify that it actually saves this
   }
+
+
 
   //creates a new Map
   createMap(Lat:number, Lng:number){
@@ -102,7 +84,7 @@ export class LocationmapComponent implements OnInit {
       travelMode:google.maps.TravelMode.DRIVING
 
     }, (response:any, status:any) =>{
-
+      console.log(status);
       for(let i = 0; i < response.rows[0].elements.length; i++){
         this.aptLocationArray[i].distance = Number(response.rows[0].elements[i].distance.value);
       }
@@ -123,19 +105,56 @@ export class LocationmapComponent implements OnInit {
         this.aptDisplayArray.push(item);
         let tempMarker = this.createMyMarker(item.lat, item.lng);
         tempMarker.setIcon("https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png");
-        this._addInfoListener(item.name, tempMarker);
+        this._addInfoListener(item, tempMarker);
         this.aptDestArray.push(tempMarker);
       }
       //console.log(this.aptLocationArray);
     });
   }
 
-  _addInfoListener(content:string, marker:any):void{
-    var infoWindow = new google.maps.InfoWindow();
+    //creates Array with Distance modifier
+  createDistanceForArray2():void{
+    let matrix = new google.maps.DistanceMatrixService();
+    for(let i = 0; i < this.aptLocationArray.length; i++){
+      matrix.getDistanceMatrix({
+
+        origins:[new google.maps.LatLng(this.myLat,this.myLng)],
+        destinations:[new google.maps.LatLng(this.aptLocationArray[i].lat,this.aptLocationArray[i].lng)],
+        travelMode:google.maps.TravelMode.DRIVING
+
+      }, (response:any, status:any) =>{
+        console.log(status);
+        this.aptLocationArray[i].distance = Number(response.rows[0].elements[i].distance.value);
+        //console.log(this.aptLocationArray);
+        if(i == this.aptLocationArray.length - 1){
+          this._sortArrayDistance();
+
+          for(let item of this.aptDestArray){
+            item.setMap(null);
+          }
+    
+          this.aptDisplayArray = [];
+          this.aptDestArray = [];
+    
+          for(let item of this.aptLocationArray){
+            if(item.distance > this.aptDisplayNumber){
+              break;
+            }
+            this.aptDisplayArray.push(item);
+            let tempMarker = this.createMyMarker(item.lat, item.lng);
+            tempMarker.setIcon("https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png");
+            this._addInfoListener(item, tempMarker);
+            this.aptDestArray.push(tempMarker);
+          }
+        }
+      });
+    }
+      //console.log(this.aptLocationArray);
+  }
+
+  _addInfoListener(item:any, marker:any):void{
     marker.addListener('click', () =>{
-      infoWindow.close();
-      infoWindow.setContent(content);
-      infoWindow.open(this.map,marker);
+      this.changeViewCenter(item);
     });
   }
 
@@ -149,9 +168,9 @@ export class LocationmapComponent implements OnInit {
   }
 
   //populate new array in the beginning to have distance variable
-  populateLocationArray():void{
-    for(let location of this.aptLocationProxyArray){
-      this.aptLocationArray.push(new Locationmodel(location.name, location.formatted_address, location.lat, location.lng, -1));
+  populateLocationArray(addressArray:any):void{
+    for(let location of addressArray){
+      this.aptLocationArray.push(new Locationmodel(location.address1 + " " + location.city + " " + location.state + " " + location.postalCode , location.coordinates.lat, location.coordinates.lng, -1));
     }
     console.log(this.aptLocationArray);
   }
@@ -160,7 +179,7 @@ export class LocationmapComponent implements OnInit {
   changeMap():void{
     this.ms.getGeocode(this.tempAddress).subscribe(
       (geocode:any)=>{
-        //console.log(geocode);
+        console.log(geocode);
         this.myLat = geocode.results[0].geometry.location.lat;
         this.myLng = geocode.results[0].geometry.location.lng;
         this.directionDisplay.setDirections({routes: []});
@@ -172,6 +191,30 @@ export class LocationmapComponent implements OnInit {
         console.log("Location not found!");
       }
     );
+  }
+
+  //use my IP to get location
+  useMyLocation():void{
+
+    if(confirm('Allow this application to know your location')){
+      //Calls Http request for location from public IP
+      this.ms.getMyLocation().subscribe(
+        (myInfo:any)=>{
+          this.myLat = myInfo.latitude;
+          this.myLng = myInfo.longitude;
+          this.formatted_address = myInfo.city + ", " + myInfo.region_code + ", " + myInfo.country_code + " " + myInfo.postal;
+          //console.log(this.formatted_address);
+          this.directionDisplay.setDirections({routes: []});
+          this.storeLocation = null;
+          this.changeMapCenter(this.myLat, this.myLng);
+          this.createDistanceForArray();
+        },
+        ()=>{
+          console.log("Location not found!");
+        }
+      );
+    }
+
   }
 
   changeMapCenter(Lat:number,Lng:number):void{
@@ -224,6 +267,7 @@ export class LocationmapComponent implements OnInit {
     this.map.setCenter({lat:this.myLat, lng:this.myLng});
     this.storeLocation = null;
   }
+
   goLocation():void{
     this.transferService.setApptLocation(this.storeLocation.formatted_address);
     //console.log(this.transferService.getAppt()); //Debugging statement

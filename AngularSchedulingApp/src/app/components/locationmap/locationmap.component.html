@@ -4,12 +4,15 @@
             <div class="card shadow my-card">
                 <div class="card-body">
 
-                    <div class="input-group mb-3" id="locationInput">
+                    <div class="input-group mb-12" id="locationInput">
                         <input type="text" [(ngModel)] = "tempAddress">
                     </div>
 
                     <div class="text-center mt-4">
                         <button class="btn my-btn" (click)="changeMap()">SEARCH</button>
+                    </div>
+                    <div class="text-center mt-4">
+                        <button class="btn my-btn col-sm-4" (click)="useMyLocation()">use my location</button>
                     </div>
 
                     <br>
