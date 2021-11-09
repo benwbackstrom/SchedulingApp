@@ -14,20 +14,28 @@ export class DatetimeComponent implements OnInit {
 
   public dateForm!: FormGroup;
 
+  // Object to hold the date and time range for transfer between components
   desiredDateTimeRange: DateTimeRange = new DateTimeRange(); 
 
+  // bools to show/hide actual inputs over placeholder inputs
   public showSelectEndDate: boolean = false;
   public showSelectStartTime: boolean = false;
   public showSelectEndTime: boolean = false;
 
+  // get the current date to restrict dates
   public currentDate: Date = new Date();
 
   public startDate: Date = new Date();
+
+  // array to hold available times in the day an appointment can be selected
   public startTimes: number[] = [];
   public endTimes: number[] = [];
 
+  // bool to fix invalid end time bug
+  public validEndDate: boolean = false;
+
   // placeholder location start and end
-  // would be using the selected location's start & end times
+  // would ideally be using the selected location's start & end times
   public locationStartTime = 9;
   public locationEndTime = 17;
 
@@ -40,7 +48,7 @@ export class DatetimeComponent implements OnInit {
       startDate: ['', [Validators.required, startDateValidator()]],
 
       // check if end date is start date or later
-      endDate: ['', [Validators.required, endDateValidator(this.startDate)]],
+      endDate: ['', Validators.required],
 
       startTime: ['', Validators.required],
 
@@ -69,6 +77,7 @@ export class DatetimeComponent implements OnInit {
     
           // reset the end time in case the user is switching dates
           this.dateForm.get('endDate')?.reset();
+          this.validEndDate = false;
         } else {
           // hide the other selectors
           this.showSelectEndDate = false;
@@ -76,6 +85,7 @@ export class DatetimeComponent implements OnInit {
           this.showSelectEndTime = false;
           // reset the other inputs
           this.dateForm.get('endDate')?.reset();
+          this.validEndDate = false;
         }
 
       } else {
@@ -85,6 +95,7 @@ export class DatetimeComponent implements OnInit {
         this.showSelectEndTime = false;
         // reset the other inputs
         this.dateForm.get('endDate')?.reset();
+        this.validEndDate = false;
       }
     });
 
@@ -93,13 +104,18 @@ export class DatetimeComponent implements OnInit {
       // console.log("end date changed");
       // console.log(selectedValue);
 
+      // validate end date with input start date
+      if (selectedValue != null && selectedValue != "") {
+        this.validEndDate = this.validateEndDate(this.startDate, new Date(this.convertDateString(selectedValue)) );
+      }
+
       // clear start & end times
       this.dateForm.get('startTime')?.reset();
       this.dateForm.get('endTime')?.reset();
       this.showSelectStartTime = false;
       this.showSelectEndTime = false;
 
-      if (selectedValue != null && selectedValue != "" && new Date(this.convertDateString(selectedValue)) >= this.currentDate) {
+      if ( (selectedValue != null) && (selectedValue != "") && (new Date(this.convertDateString(selectedValue)) >= this.currentDate) && (this.validEndDate) ) {
         // update starting times
         this.addStartTimes(this.locationStartTime, this.locationEndTime);
         // show starting times
@@ -128,6 +144,16 @@ export class DatetimeComponent implements OnInit {
 
   // submit just logs the data at the moment
   submitDateForm() {
+    // validate all inputs first
+    if (this.validateAllInput(this.dateForm.controls['startDate'].value, 
+        this.dateForm.controls['endDate'].value, 
+        this.dateForm.controls['startTime'].value, 
+        this.dateForm.controls['endTime'].value)
+    ) {
+      console.log("Invalid Inputs!")
+      return;
+    }
+
     // log for testing purposes
     console.log("User Input Date: ")
     console.log(`Starting date: ${this.dateForm.controls['startDate'].value}`);
@@ -187,5 +213,39 @@ export class DatetimeComponent implements OnInit {
 
   nextPage():void{
     this.router.navigate(["calendar"]);
+  }
+
+  // check if the end date is valid (fix for invalid end date bug)
+  validateEndDate(startDate: Date, endDate: Date) :boolean {
+    console.log("############# Validating End Date against Start Date");
+    console.log("Start date: ");
+    console.log(startDate);
+    console.log("End date: ");
+    console.log(endDate);
+    console.log("########## Done Validating End Date against Start Date");
+    return (startDate <= endDate);
+  }
+
+  validateAllInput(startDateString: string, endDateString: string, startTime: number, endTime: number): boolean {
+    // create dates
+    let startDate = new Date(startDateString);
+    let endDate = new Date(endDateString);
+
+    // check start date
+    if (startDate == null) {return false;}
+    if (startDate < this.currentDate) {return false;}
+
+    // check end date
+    if (endDate == null) {return false;}
+    if (!this.validateEndDate(startDate, endDate)) {return false;}
+
+    // check start time
+    if (startTime == null || startTime == 0) {return false;}
+
+    // check end time
+    if (endTime == null || endTime == 0) {return false;}
+    if (startTime > endTime) {return false;}
+
+    return true;
   }
 }
