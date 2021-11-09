@@ -150,7 +150,7 @@ export class DatetimeComponent implements OnInit {
         this.dateForm.controls['startTime'].value, 
         this.dateForm.controls['endTime'].value)
     ) {
-      console.log("Invalid Inputs!")
+      console.log("Invalid Inputs!");
       return;
     }
 
