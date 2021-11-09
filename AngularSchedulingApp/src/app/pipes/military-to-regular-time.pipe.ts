@@ -8,7 +8,10 @@ export class MilitaryToRegularTimePipe implements PipeTransform {
   transform(value: number): string {
     let time="";
     let ap = "AM";
-
+    
+    if(value == undefined || value == NaN){
+      return "";
+    }
     // accounts for 12:01PM - 12:59PM
     if (value > 12 && value < 13) {
       ap="PM";

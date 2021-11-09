@@ -4,6 +4,7 @@ import { Appointment } from 'src/app/models/appointment';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ConfirmationService } from 'src/app/services/confirmation.service';
+import { MilitaryToRegularTimePipe } from 'src/app/pipes/military-to-regular-time.pipe';
 
 @Component({
   selector: 'app-confirmation',
@@ -38,7 +39,7 @@ export class ConfirmationComponent implements OnInit {
       ],
       location: [{value:this.appointment.location, disabled:true}],
       date: [{value:this.appointment.date, disabled:true}],
-      time: [{value:this.appointment.time, disabled:true}]
+      time: [{value:MilitaryToRegularTimePipe.prototype.transform(this.appointment.time), disabled:true}]
     });
   }
 

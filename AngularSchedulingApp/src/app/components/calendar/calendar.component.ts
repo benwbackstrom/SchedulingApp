@@ -2,6 +2,7 @@ import { getLocaleDateTimeFormat } from '@angular/common';
 import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ApptTransferService } from 'src/app/services/appt-transfer.service';
+import { CalendarserviceService } from 'src/app/services/calendarservice.service';
 
 @Component({
   selector: 'app-calendar',
@@ -17,19 +18,52 @@ export class CalendarComponent implements OnInit, AfterViewInit  {
 
   public animation:String = "slide-in";
 
-  constructor(private router: Router, private transferService: ApptTransferService, ) { }
+  constructor(private router: Router, private transferService: ApptTransferService, private cs: CalendarserviceService) { }
 
   ngOnInit(): void {
-    let startD = this.transferService.getStartDate();
-    let endD = this.transferService.getEndDate();
-    let rangeD = this.getDateRange(startD, endD);
+    this.cs.getTimes().subscribe(
+      (times:any)=>{
+        console.log(times);
+        let startD = this.transferService.getStartDate();
+        let endD = this.transferService.getEndDate();
+        let rangeD = this.getDateRange(startD, endD);
+        let startT = this.transferService.getStartTime();
+        this.setTopTime(startT);
+        let endT = this.transferService.getEndTime();
+        for(let i=0; i<rangeD.length; i++){
+            let dow = this.getDOW(rangeD[i]);
+            if(dow == "Sun" || dow == "Sat"){
+              this.appointments.push({"year": rangeD[i].getFullYear(), "dow": dow, "date": this.getMyDate(rangeD[i]), times: this.getTimesInRange(startT, endT, times[0].times)});
+            }
+            else if(dow == "Mon" || dow == "Wed" || dow == "Fri"){
+              this.appointments.push({"year": rangeD[i].getFullYear(), "dow": dow, "date": this.getMyDate(rangeD[i]), times: this.getTimesInRange(startT, endT, times[1].times)});
+            }
+            else{
+              this.appointments.push({"year": rangeD[i].getFullYear(), "dow": dow, "date": this.getMyDate(rangeD[i]), times: this.getTimesInRange(startT, endT, times[2].times)});
+            }
+        }
+      }
+    );
+
     let startT = this.transferService.getStartTime();
     this.setTopTime(startT);
-    let endT = this.transferService.getEndTime();
-    for(let i=0; i<rangeD.length; i++){
-      console.log(rangeD[i]);
-      this.appointments.push({"year": rangeD[i].getFullYear(), "dow": this.getDOW(rangeD[i]), "date": this.getMyDate(rangeD[i]), times: this.getTimesInRange(startT, endT, this.tempApptTimes)});
-    }
+
+    // for(let i=0; i<rangeD.length; i++){
+    //   let dow = this.getDOW(rangeD[i]);
+      
+    //   if(dow == "Sun" || dow == "Sat"){
+    //     console.log(dow  + " " + apptTimes[0].times);
+    //     this.appointments.push({"year": rangeD[i].getFullYear(), "dow": dow, "date": this.getMyDate(rangeD[i]), times: this.getTimesInRange(startT, endT, apptTimes[0])});
+    //   }
+    //   else if(dow == "Mon" || dow == "Wed" || dow == "Fri"){
+    //     console.log(dow  + " " + apptTimes[1].times);
+    //     this.appointments.push({"year": rangeD[i].getFullYear(), "dow": dow, "date": this.getMyDate(rangeD[i]), times: this.getTimesInRange(startT, endT, apptTimes[1])});
+    //   }
+    //   else{
+    //     console.log(dow  + " " + apptTimes[2].times);
+    //     this.appointments.push({"year": rangeD[i].getFullYear(), "dow": dow, "date": this.getMyDate(rangeD[i]), times: this.getTimesInRange(startT, endT, apptTimes[2])});
+    //   }
+    // }
   }
 
   ngAfterViewInit() {
