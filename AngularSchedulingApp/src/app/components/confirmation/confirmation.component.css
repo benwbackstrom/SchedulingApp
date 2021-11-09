@@ -1,3 +1,7 @@
 .pencil{
     height: 25px;
 }
+
+.edit-datetime, .edit-map {
+    cursor: pointer;
+}
