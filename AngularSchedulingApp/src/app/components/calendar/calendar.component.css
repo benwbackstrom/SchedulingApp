@@ -21,7 +21,7 @@
 
 .time{
     border-top: solid gray;
-    color: rgb(133,153,173);
+    color: black;
     font-weight: 700;
     height: 2.5em;
 }
@@ -68,7 +68,7 @@ th{
 .my-card{
     overflow-y: scroll;
     height: 75vh;
-    background-color: rgba(255, 255, 255, 0.15);
+    background-color: rgba(255, 255, 255, 0.25);
     backdrop-filter: blur(8px); 
     padding: 0px;
 }
