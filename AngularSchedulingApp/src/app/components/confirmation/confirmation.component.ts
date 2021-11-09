@@ -72,11 +72,13 @@ export class ConfirmationComponent implements OnInit {
   navToMap(): void{
     this.updateInitialFormInfo();                  //route back to map component to select new location
     console.log("navToMap called");
+    this.router.navigate(["map"]);
   }
   
-  navToCalendar(): void{
-    this.updateInitialFormInfo();                  //route back to calendar component to select new date/time
-    console.log("navToCalendar called");
+  navToDatetime(): void{
+    this.updateInitialFormInfo();                  //route back to datetime component to select new date/time
+    console.log("navToDatetime called");
+    this.router.navigate(["datetime"]);
   }
 
   updateInitialFormInfo(): void{

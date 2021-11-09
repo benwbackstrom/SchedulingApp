@@ -12,7 +12,7 @@
                                     <input formControlName="location" id="locationTextField" type="text" placeholder="choose a location" class="form-control">
                                 </div>
                                 <div class="col-1 d-flex align-items-end flex-column">
-                                    <a class="mt-auto p-2" href="/map"><img class="pencil" src="../../../assets/pencil.png"></a>
+                                    <a class="mt-auto p-2 edit-map" (click) = "navToMap()"><img class="pencil" src="../../../assets/pencil.png"></a>
                                 </div>
                             </div>
                             <div class="row">
@@ -21,14 +21,14 @@
                                     <input formControlName="date" id="dateTextField" type="text" placeholder="choose a date" class="form-control">
                                 </div>
                                 <div class="col-1 d-flex align-items-end flex-column">
-                                    <a class="mt-auto p-2" href="/datetime"><img class="pencil" src="../../../assets/pencil.png"></a>
+                                    <a class="mt-auto p-2 edit-datetime" (click) = "navToDatetime()"><img class="pencil" src="../../../assets/pencil.png"></a>
                                 </div>
                                 <div class="col-5">
                                     <label for="location">Time</label>
                                     <input formControlName="time" id="timeTextField" type="text" placeholder="choose a time" class="form-control">
                                 </div>
                                 <div class="col-1 d-flex align-items-end flex-column">
-                                    <a class="mt-auto p-2" href="/datetime"><img class="pencil" src="../../../assets/pencil.png"></a>
+                                    <a class="mt-auto p-2 edit-datetime" (click) = "navToDatetime()"><img class="pencil" src="../../../assets/pencil.png"></a>
                                 </div>
                             </div>
                         </div>
