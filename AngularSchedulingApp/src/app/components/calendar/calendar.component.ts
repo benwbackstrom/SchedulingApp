@@ -26,10 +26,22 @@ export class CalendarComponent implements OnInit, AfterViewInit  {
         console.log(times);
         let startD = this.transferService.getStartDate();
         let endD = this.transferService.getEndDate();
+        if(startD == undefined){
+          startD = new Date();
+        }
+        if(endD == undefined){
+          endD = new Date();
+        }
         let rangeD = this.getDateRange(startD, endD);
         let startT = this.transferService.getStartTime();
+        if(startT == undefined){
+          startT = 9;
+        }
         this.setTopTime(startT);
         let endT = this.transferService.getEndTime();
+        if(endT == undefined){
+          endT = 17;
+        }
         for(let i=0; i<rangeD.length; i++){
             let dow = this.getDOW(rangeD[i]);
             if(dow == "Sun" || dow == "Sat"){
@@ -46,24 +58,10 @@ export class CalendarComponent implements OnInit, AfterViewInit  {
     );
 
     let startT = this.transferService.getStartTime();
+    if(startT == undefined){
+      startT = 9;
+    }
     this.setTopTime(startT);
-
-    // for(let i=0; i<rangeD.length; i++){
-    //   let dow = this.getDOW(rangeD[i]);
-      
-    //   if(dow == "Sun" || dow == "Sat"){
-    //     console.log(dow  + " " + apptTimes[0].times);
-    //     this.appointments.push({"year": rangeD[i].getFullYear(), "dow": dow, "date": this.getMyDate(rangeD[i]), times: this.getTimesInRange(startT, endT, apptTimes[0])});
-    //   }
-    //   else if(dow == "Mon" || dow == "Wed" || dow == "Fri"){
-    //     console.log(dow  + " " + apptTimes[1].times);
-    //     this.appointments.push({"year": rangeD[i].getFullYear(), "dow": dow, "date": this.getMyDate(rangeD[i]), times: this.getTimesInRange(startT, endT, apptTimes[1])});
-    //   }
-    //   else{
-    //     console.log(dow  + " " + apptTimes[2].times);
-    //     this.appointments.push({"year": rangeD[i].getFullYear(), "dow": dow, "date": this.getMyDate(rangeD[i]), times: this.getTimesInRange(startT, endT, apptTimes[2])});
-    //   }
-    // }
   }
 
   ngAfterViewInit() {

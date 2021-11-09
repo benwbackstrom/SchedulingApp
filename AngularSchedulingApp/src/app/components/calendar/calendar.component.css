@@ -40,7 +40,7 @@
 th{
     background-color: rgb(133,153,173);
     color: #e2e3e2;
-    min-width:20px;
+    min-width:100px;
 }
 
 .my-btn{
@@ -71,10 +71,6 @@ th{
     background-color: rgba(255, 255, 255, 0.25);
     backdrop-filter: blur(8px); 
     padding: 0px;
-}
-
-.table-fixed {
-    width: 100%;
 }
 
 .table-fixed thead th {
