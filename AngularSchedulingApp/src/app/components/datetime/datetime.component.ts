@@ -150,7 +150,13 @@ export class DatetimeComponent implements OnInit {
   // submit just logs the data at the moment
   submitDateForm() {
     // validate all inputs first
-    if (this.validateAllInput(this.dateForm.controls['startDate'].value, 
+    console.log("CURRENT INPUTS");
+    console.log(this.dateForm.controls['startDate'].value);
+    console.log(this.dateForm.controls['endDate'].value);
+    console.log(this.dateForm.controls['startTime'].value);
+    console.log(this.dateForm.controls['endTime'].value);
+
+    if (!this.validateAllInput(this.dateForm.controls['startDate'].value, 
         this.dateForm.controls['endDate'].value, 
         this.dateForm.controls['startTime'].value, 
         this.dateForm.controls['endTime'].value)
@@ -231,25 +237,29 @@ export class DatetimeComponent implements OnInit {
     return (startDate <= endDate);
   }
 
-  validateAllInput(startDateString: string, endDateString: string, startTime: number, endTime: number): boolean {
+  validateAllInput(startDateString: string, endDateString: string, startTimeString: string, endTimeString: string): boolean {
     // create dates
-    let startDate = new Date(startDateString);
-    let endDate = new Date(endDateString);
+    let startDate = new Date(this.convertDateString(startDateString));
+    let endDate = new Date(this.convertDateString(endDateString));
 
     // check start date
-    if (startDate == null) {return false;}
-    if (startDate < this.currentDate) {return false;}
+    if (startDate == null) {console.log("start date is null"); return false;}
+    if (startDate < this.currentDate) {console.log("start less than current date"); return false;}
 
     // check end date
-    if (endDate == null) {return false;}
-    if (!this.validateEndDate(startDate, endDate)) {return false;}
+    if (endDate == null) {console.log("end date is null"); return false;}
+    if (!this.validateEndDate(startDate, endDate)) {console.log("end less than current date"); return false;}
+
+    // create times
+    let startTime = Number(startTimeString);
+    let endTime = Number(endTimeString);
 
     // check start time
-    if (startTime == null || startTime == 0) {return false;}
+    if (startTime == null || startTime == 0 || startTime == NaN) {console.log("start time is null"); return false;}
 
     // check end time
-    if (endTime == null || endTime == 0) {return false;}
-    if (startTime > endTime) {return false;}
+    if (endTime == null || endTime == 0 || endTime == NaN) {console.log("end time is null"); return false;}
+    if (startTime > endTime) {console.log("start time greater than end time"); return false;}
 
     return true;
   }
