@@ -107,6 +107,9 @@ export class DatetimeComponent implements OnInit {
       // validate end date with input start date
       if (selectedValue != null && selectedValue != "") {
         this.validEndDate = this.validateEndDate(this.startDate, new Date(this.convertDateString(selectedValue)) );
+        if (!this.validEndDate) {
+          this.dateForm.controls['endDate'].setErrors({ 'invalid': true });
+        }
       }
 
       // clear start & end times
@@ -116,6 +119,8 @@ export class DatetimeComponent implements OnInit {
       this.showSelectEndTime = false;
 
       if ( (selectedValue != null) && (selectedValue != "") && (new Date(this.convertDateString(selectedValue)) >= this.currentDate) && (this.validEndDate) ) {
+        // set to valid
+        this.dateForm.controls['endDate'].setErrors( null );
         // update starting times
         this.addStartTimes(this.locationStartTime, this.locationEndTime);
         // show starting times

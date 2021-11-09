@@ -36,9 +36,9 @@
                                     <div class="" *ngIf="dateForm.controls['endDate'].errors?.required">
                                         Please enter a valid date!
                                     </div>
-                                </div>
-                                <div class="alert alert-danger" *ngIf="dateForm.controls['endDate'].touched && validEndDate == false && !dateForm.controls['endDate'].invalid">
-                                    The end date must be on or after the start date!
+                                    <div class="" *ngIf="validEndDate == false">
+                                        The end date must be on or after the start date!
+                                    </div>
                                 </div>
                                 <!-- placeholder -->
                                 <div *ngIf="showSelectEndDate; else elseBlockForEndDate">
