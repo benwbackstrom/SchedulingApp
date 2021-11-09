@@ -18,8 +18,9 @@
 
 /*This way we better let the user know they can click a location on the table to recenter*/
 .location-row:hover {
-    background-color: black;
+    background-color: rgb(77, 92, 107);
     color: aliceblue;
+    cursor: pointer;
 }
 
 .location-list {
