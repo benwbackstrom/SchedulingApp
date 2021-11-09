@@ -8,8 +8,21 @@
     border-width: 3px;
 }
 
+.searchButton {
+    border-right: 2px solid rgb(255, 255, 255) !important;
+}
+
+.location-row.card {
+    background-color: rgba(255, 255, 255, 0.596);
+}
+
 /*This way we better let the user know they can click a location on the table to recenter*/
-tr:hover {
+.location-row:hover {
     background-color: black;
     color: aliceblue;
+}
+
+.location-list {
+    height: 400px;
+    overflow: auto;
 }
