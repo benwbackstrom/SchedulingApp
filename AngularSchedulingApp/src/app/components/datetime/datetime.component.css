@@ -48,3 +48,21 @@
     100%{ right: 100%;}
     100%{ opacity: 0;}
 }
+
+@media (max-width: 550px) {
+    .date-range-container, .time-range-container {
+        display: flex;
+        flex-direction: column !important;
+    }
+    .start-date-container, .end-date-container, .start-time-container, .end-time-container {
+        width: auto !important;
+    }
+
+    .end-date-container, .end-time-container {
+        margin-top: 10px;
+    }
+
+    .divider {
+        display: none !important;
+    }
+}

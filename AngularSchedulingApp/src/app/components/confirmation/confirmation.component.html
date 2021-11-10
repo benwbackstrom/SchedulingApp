@@ -1,33 +1,27 @@
 
 <div class="card shadow my-card" [id]=animation>
-    <div *ngIf="!transComplete" class="form">
+    <div *ngIf="!transComplete" class="form p-3">
         <h3 class="header">Confirm and submit your appointment information</h3>
         <form [formGroup]="informationForm" class="p-1" (ngSubmit)="submitForm()">
             <div>
-                <div class = "row">
-                    <div class="col-lg-11">
+                <div class="d-flex flex-row">
+                    <div class="w-100">
                         <label for="location">Location</label>
                         <input formControlName="location" id="locationTextField" type="text" placeholder="choose a location" class="form-control">
                     </div>
-                    <div class="col-1 d-flex align-items-end flex-column">
-                        <a class="mt-auto p-2 edit-map" (click) = "navToMap()"><img class="pencil" src="../../../assets/pencil.png"></a>
-                    </div>
+                    <a class="mt-auto p-2 edit-map" (click) = "navToMap()"><img class="pencil" src="../../../assets/pencil.png"></a>
                 </div>
-                <div class="row">
-                    <div class="col-5">
+                <div class="d-flex">
+                    <div class="w-50">
                         <label for="date">Date</label>
                         <input formControlName="date" id="dateTextField" type="text" placeholder="choose a date" class="form-control">
                     </div>
-                    <div class="col-1 d-flex align-items-end flex-column">
-                        <a class="mt-auto p-2 edit-datetime" (click) = "navToDatetime()"><img class="pencil" src="../../../assets/pencil.png"></a>
-                    </div>
-                    <div class="col-5">
+                    <a class="mt-auto p-2 edit-datetime" (click) = "navToDatetime()"><img class="pencil" src="../../../assets/pencil.png"></a>
+                    <div class="w-50">
                         <label for="location">Time</label>
                         <input formControlName="time" id="timeTextField" type="text" placeholder="choose a time" class="form-control">
                     </div>
-                    <div class="col-1 d-flex align-items-end flex-column">
-                        <a class="mt-auto p-2 edit-datetime" (click) = "navToDatetime()"><img class="pencil" src="../../../assets/pencil.png"></a>
-                    </div>
+                    <a class="mt-auto p-2 edit-datetime" (click) = "navToDatetime()"><img class="pencil" src="../../../assets/pencil.png"></a>
                 </div>
             </div>
             <div>
