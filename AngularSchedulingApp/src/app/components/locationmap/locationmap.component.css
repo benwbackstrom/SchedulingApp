@@ -78,3 +78,41 @@
     100%{ right: 100%;}
     100%{ opacity: 0;}
 }
+
+@media (max-width: 1099px) {
+    .map-and-location-container {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .map-container, .locations-container {
+        width: 100% !important;
+    }
+
+    .locations-container {
+        margin-top: 20px;
+    }
+
+    .location-row {
+        display: flex;
+        flex-direction: column !important;
+    }
+
+    .location-row > div {
+        width: auto !important;
+        text-align: center;
+        margin-bottom: 5px;
+    }
+
+    #location-input {
+        width: 151px !important;
+    }
+}
+
+@media (max-width: 635px) {
+    button.searchButton, button.currentLocationButton {
+        margin: 10px auto !important;
+        border-radius: 20px !important;
+        border-color: rgb(133,153,173) !important;
+    }
+}

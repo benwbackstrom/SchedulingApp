@@ -111,7 +111,7 @@ export class CalendarComponent implements OnInit, AfterViewInit  {
 
   // formats a Date object as a string MM/dd
   getMyDate(data:Date): string{
-    return data.getMonth() + "/" + data.getDate();
+    return (data.getMonth()+1) + "/" + data.getDate();
   }
 
   // gets the day of the week based on a Date
