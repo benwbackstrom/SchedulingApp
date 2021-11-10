@@ -17,6 +17,7 @@ export class ConfirmationComponent implements OnInit {
   public appointment:Appointment = new Appointment();
   public transComplete:boolean = false;
   public postError: boolean = false;
+  public emailStatus: number = 0;
   
   public animation:String = "slide-in";
 
@@ -43,6 +44,7 @@ export class ConfirmationComponent implements OnInit {
       date: [{value:this.appointment.date, disabled:true}],
       time: [{value:MilitaryToRegularTimePipe.prototype.transform(this.appointment.time), disabled:true}]
     });
+    this.postError = false;
   }
 
   submitForm(){                     //on submit adjust appointment object and send to confirm service
@@ -66,9 +68,11 @@ export class ConfirmationComponent implements OnInit {
   }
 
   sendConfirmationEmail(): void{
-    console.log("in send email function");
-    this.confirmServ.sendMail(this.appointment).subscribe(data => {                                                                                                                                              
-    }, error => {                                  //TODO display message in summary that email didnt send         
+    this.confirmServ.sendMail(this.appointment).subscribe(data => {
+      this.emailStatus = 1;
+      console.log("wth?");                                                                                                                                            
+    }, error => {
+      this.emailStatus = 2;                                  //TODO display message in summary that email didnt send         
       console.log(error);                                             
     });
   }

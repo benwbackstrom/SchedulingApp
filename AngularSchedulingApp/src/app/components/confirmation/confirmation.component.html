@@ -59,6 +59,7 @@
         <div>Travel to: {{appointment.location}}</div>
         <div>On: {{appointment.date}}</div>
         <div class="pb-2">Arrive at: {{appointment.time | militaryToRegularTime}}</div>
-        <div>An email confirmation has been sent to {{appointment.email}}</div>
+        <div *ngIf="emailStatus===1">An email confirmation has been sent to {{appointment.email}}</div>
+        <div *ngIf="emailStatus===2">There was an error sending your confirmation email.  Please copy or print the above information.</div>
     </div>
 </div>
