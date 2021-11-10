@@ -6,6 +6,7 @@ body{
     -moz-background-size: cover;
     -o-background-size: cover;
     background-size: cover;
+    overflow-x: hidden;
 }
 
 a{
@@ -38,8 +39,4 @@ a:hover{
     color: black;
     backdrop-filter: blur(8px); 
     padding: 10px;
-}
-
-.header{
-    color: rgb(0, 0, 0);
 }

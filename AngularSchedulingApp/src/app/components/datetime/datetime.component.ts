@@ -39,6 +39,8 @@ export class DatetimeComponent implements OnInit {
   public locationStartTime = 9;
   public locationEndTime = 17;
 
+  public animation:String = "slide-in";
+
   constructor(private formBuilder: FormBuilder, private router: Router, private transferService: ApptTransferService) { }
 
   ngOnInit(): void {
@@ -223,7 +225,8 @@ export class DatetimeComponent implements OnInit {
   }
 
   nextPage():void{
-    this.router.navigate(["calendar"]);
+    this.animation = "slide-out";
+    setTimeout(() => {this.router.navigate(['calendar']);}, 1000);
   }
 
   // check if the end date is valid (fix for invalid end date bug)

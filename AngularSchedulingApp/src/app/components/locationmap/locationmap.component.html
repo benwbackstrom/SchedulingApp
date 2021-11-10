@@ -1,70 +1,64 @@
-<div class="container mt-5">
-    <div class="row">
-        <div class="col-lg">
-            <div class="card shadow my-card">
-                <div class="card-body">
+<div class="card shadow my-card" [id]=animation>
+    <div class="card-body">
 
-                    <h2 class="mb-3">Select a Location</h2>
+        <h2 class="mb-3">Select a Location</h2>
 
-                    <!-- location -->
-                    <div class="input-group mb-4">
-                        <!-- location input -->
-                        <div class="input-group-text">Location</div>
-                        <input type="text" class="form-control" id="locationInput" placeholder="Enter a location you'd like to search" [(ngModel)] = "tempAddress">
+        <!-- location -->
+        <div class="input-group mb-4">
+            <!-- location input -->
+            <div class="input-group-text">Location</div>
+            <input type="text" class="form-control" id="locationInput" placeholder="Enter a location you'd like to search" [(ngModel)] = "tempAddress">
 
-                        <!-- search button -->
-                        <button class="btn my-btn searchButton" (click)="changeMap()">Search</button>
-                        <!-- user current location button -->
-                        <button class="btn my-btn currentLocationButton" (click)="useMyLocation()">Current Location</button>
-                    </div>
+            <!-- search button -->
+            <button class="btn my-btn searchButton" (click)="changeMap()">Search</button>
+            <!-- user current location button -->
+            <button class="btn my-btn currentLocationButton" (click)="useMyLocation()">Current Location</button>
+        </div>
 
-                    <!-- map&locations container -->
-                    <div class="d-flex mt-2">
-                        
-                        <!-- map -->
-                        <div class="w-50 me-4">
-                            <div class="d-flex">
-                                <h5 class="me-3">Map View</h5>
-                                <!-- map buttons -->
-                                <button class="btn btn-sm my-btn resetMap me-2" (click)="resetMap()" style="width: auto;">Reset Map</button>
-                                <button class="btn btn-sm my-btn goLocation" (click)="goLocation()" *ngIf="storeLocation != null" style="width: auto;">Select Location</button>
-                            </div>
-                            <div class="full mt-2" id="map">
-                            </div>
-                        </div>
-
-                        <!-- location list -->
-                        <div class="w-50">
-                            <div class="pb-2">
-                                <h5>Available Locations</h5>
-                            </div>
-                            <div class="location-list">
-                                <div *ngFor="let location of aptDisplayArray">
-                                    <!-- location row -->
-                                    <div class="d-flex flex-row justify-content-between w-100 mb-2 p-2 location-row card align-items-center" (click)="changeViewCenter(location)">
-                                        <!-- location name -->
-                                        <div class="w-25">United States Postal Service</div>
-                                        <!-- location address -->
-                                        <div class="w-25">{{location.formatted_address}}</div>
-                                        <!-- location distance -->
-                                        <div class="">{{location.distance | meterToMile | number:'.2'}}</div>
-                                        <!-- location select button -->
-                                        <button class="btn my-btn chooseLocation" (click)="chooseLocation(location)">Choose</button>
-                                    </div>
-                                </div>
-                            </div>
-                            
-                        </div>
-
-                    </div>
-
+        <!-- map&locations container -->
+        <div class="d-flex mt-2">
+            
+            <!-- map -->
+            <div class="w-50 me-4">
+                <div class="d-flex">
+                    <h5 class="me-3">Map View</h5>
+                    <!-- map buttons -->
+                    <button class="btn btn-sm my-btn resetMap me-2" (click)="resetMap()" style="width: auto;">Reset Map</button>
+                    <button class="btn btn-sm my-btn goLocation" (click)="goLocation()" *ngIf="storeLocation != null" style="width: auto;">Select Location</button>
                 </div>
+                <div class="full mt-2" id="map">
+                </div>
+            </div>
 
-                
+            <!-- location list -->
+            <div class="w-50">
+                <div class="pb-2">
+                    <h5>Available Locations</h5>
+                </div>
+                <div class="location-list">
+                    <div *ngFor="let location of aptDisplayArray">
+                        <!-- location row -->
+                        <div class="d-flex flex-row justify-content-between w-100 mb-2 p-2 location-row card align-items-center" (click)="changeViewCenter(location)">
+                            <!-- location name -->
+                            <div class="w-25">United States Postal Service</div>
+                            <!-- location address -->
+                            <div class="w-25">{{location.formatted_address}}</div>
+                            <!-- location distance -->
+                            <div class="">{{location.distance | meterToMile | number:'.2'}}</div>
+                            <!-- location select button -->
+                            <button class="btn my-btn chooseLocation" (click)="chooseLocation(location)">Choose</button>
+                        </div>
+                    </div>
+                </div>
                 
             </div>
+
         </div>
+
     </div>
+
+    
+    
 </div>
 
 

@@ -29,6 +29,8 @@ export class LocationmapComponent implements OnInit {
   private directionDisplay:any;
   public storeLocation:any = null;
 
+  public animation:String = "slide-in";
+
 
   ngOnInit(): void {
 
@@ -258,7 +260,8 @@ export class LocationmapComponent implements OnInit {
     this.transferService.setApptLocation(location.formatted_address);
     //console.log(this.transferService.getAppt()); //Debugging statement
 
-    this.router.navigate(['datetime']);
+    this.animation = "slide-out";
+    setTimeout(() => {this.router.navigate(['datetime']);}, 1000);
     //This will take us to the calendar component view
   }
 
@@ -272,7 +275,8 @@ export class LocationmapComponent implements OnInit {
     this.transferService.setApptLocation(this.storeLocation.formatted_address);
     //console.log(this.transferService.getAppt()); //Debugging statement
 
-    this.router.navigate(['datetime']);
+    this.animation = "slide-out";
+    setTimeout(() => {this.router.navigate(['datetime']);}, 1000);
     //This will take us to the calendar component view
   }
 

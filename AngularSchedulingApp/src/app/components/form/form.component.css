@@ -3,7 +3,52 @@ div {
 }
 
 .my-card{
-    margin: auto;
-    width: 50%;
-    padding: 10px;
+    width: 80%;
+}
+
+#slide-in{
+    position:absolute;
+    -webkit-animation:linear forwards alternate;
+    animation:linear forwards alternate;
+    -webkit-animation-name: run-slide-in;
+    animation-name: run-slide-in;
+    -webkit-animation-duration: 1s;
+    animation-duration: 1s;
+}    
+@-webkit-keyframes run-slide-in {
+    0% { right: -80%;}
+    0%{ opacity: 0;}
+    70%{ right: 11%;}
+    85%{ right: 8.5%;}
+    100%{ right: 9%;}
+}
+@keyframes run-slide-in {
+    0% { right: -80%;}
+    0%{ opacity: 0;}
+    70%{ right: 11%;}
+    85%{ right: 8.5%;}
+    100%{ right: 9%;}
+}
+
+#slide-out{
+    position:absolute;
+    -webkit-animation:linear forwards alternate;
+    animation:linear forwards alternate;
+    -webkit-animation-name: run-slide-out;
+    animation-name: run-slide-out;
+    -webkit-animation-duration: 1s;
+    animation-duration: 1s;
+    }     
+@-webkit-keyframes run-slide-out {
+    0% { right: 9%;}
+    35% {right: -11%; opacity: 100%;}
+    100%{ right: 100%;}
+    100%{ opacity: 0;}
+}
+
+@keyframes run-slide-out {
+    0% { right: 9%;}
+    35% {right: -11%; opacity: 100%;}
+    100%{ right: 100%;}
+    100%{ opacity: 0;}
 }

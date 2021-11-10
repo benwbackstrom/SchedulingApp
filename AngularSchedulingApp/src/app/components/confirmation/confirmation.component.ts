@@ -17,6 +17,8 @@ export class ConfirmationComponent implements OnInit {
   public appointment:Appointment = new Appointment();
   public transComplete:boolean = false;
   public postError: boolean = false;
+  
+  public animation:String = "slide-in";
 
   constructor(
     private apptTransfer:ApptTransferService,
@@ -72,13 +74,15 @@ export class ConfirmationComponent implements OnInit {
   navToMap(): void{
     this.updateInitialFormInfo();                  //route back to map component to select new location
     console.log("navToMap called");
-    this.router.navigate(["map"]);
+    this.animation = "slide-out";
+    setTimeout(() => {this.router.navigate(['map']);}, 1000);
   }
   
   navToDatetime(): void{
     this.updateInitialFormInfo();                  //route back to datetime component to select new date/time
     console.log("navToDatetime called");
-    this.router.navigate(["datetime"]);
+    this.animation = "slide-out";
+    setTimeout(() => {this.router.navigate(['datetime']);}, 1000);
   }
 
   updateInitialFormInfo(): void{

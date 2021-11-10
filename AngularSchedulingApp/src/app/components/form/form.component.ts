@@ -14,6 +14,8 @@ export class FormComponent implements OnInit {
   public informationForm!: FormGroup;
   appointment: Appointment = new Appointment();
 
+  public animation:String = "slide-in";
+
   constructor(private formBuilder: FormBuilder, private transferService: ApptTransferService, private router: Router) { }
 
   ngOnInit(): void {
@@ -38,7 +40,8 @@ export class FormComponent implements OnInit {
 
     //console.log(this.transferService.getAppt()); //Debugging statement
     
-    this.router.navigate(['map']);
+    this.animation = "slide-out";
+    setTimeout(() => {this.router.navigate(['map']);}, 1000);
     //This will take us to the map component view
   }
 
