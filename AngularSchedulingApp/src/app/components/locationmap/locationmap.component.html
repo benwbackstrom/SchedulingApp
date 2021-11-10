@@ -1,13 +1,13 @@
-<div class="card shadow my-card" [id]=animation>
+<div class="card shadow my-card map-card-container" [id]=animation>
     <div class="card-body">
 
         <h2 class="mb-3">Select a Location</h2>
 
         <!-- location -->
-        <div class="input-group mb-4">
+        <div class="input-group mb-4 location-input">
             <!-- location input -->
             <div class="input-group-text">Location</div>
-            <input type="text" class="form-control" id="locationInput" placeholder="Enter a location you'd like to search" [(ngModel)] = "tempAddress">
+            <input type="text" class="form-control" id="locationInput" placeholder="Enter a location" [(ngModel)] = "tempAddress" style="width: 151px;">
 
             <!-- search button -->
             <button class="btn my-btn searchButton" (click)="changeMap()">Search</button>
@@ -16,22 +16,22 @@
         </div>
 
         <!-- map&locations container -->
-        <div class="d-flex mt-2">
+        <div class="d-flex mt-2 map-and-location-container">
             
             <!-- map -->
-            <div class="w-50 me-4">
-                <div class="d-flex">
+            <div class="w-50 me-4 map-container">
+                <div class="d-flex align-items-center">
                     <h5 class="me-3">Map View</h5>
                     <!-- map buttons -->
                     <button class="btn btn-sm my-btn resetMap me-2" (click)="resetMap()" style="width: auto;">Reset Map</button>
-                    <button class="btn btn-sm my-btn goLocation" (click)="goLocation()" *ngIf="storeLocation != null" style="width: auto;">Select Location</button>
+                    <button class="btn btn-sm my-btn goLocation" (click)="goLocation()" *ngIf="storeLocation != null" style="width: auto;">Choose</button>
                 </div>
                 <div class="full mt-2" id="map">
                 </div>
             </div>
 
             <!-- location list -->
-            <div class="w-50">
+            <div class="w-50 locations-container">
                 <div class="pb-2">
                     <h5>Available Locations</h5>
                 </div>
@@ -44,21 +44,15 @@
                             <!-- location address -->
                             <div class="w-25">{{location.formatted_address}}</div>
                             <!-- location distance -->
-                            <div class="">{{location.distance | meterToMile | number:'.2'}}</div>
+                            <div class="">{{location.distance | meterToMile | number:'.2'}} mi</div>
                             <!-- location select button -->
                             <button class="btn my-btn chooseLocation" (click)="chooseLocation(location)">Choose</button>
                         </div>
                     </div>
                 </div>
-                
             </div>
-
         </div>
-
     </div>
-
-    
-    
 </div>
 
 
