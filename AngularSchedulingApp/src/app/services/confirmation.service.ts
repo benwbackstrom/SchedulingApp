@@ -8,7 +8,7 @@ import { Appointment } from '../models/appointment';
 })
 export class ConfirmationService {
 
-  private readonly postURL = "http://localhost:3000/appointments"; //TODO change this to remote
+  private readonly postURL = "https://json-server-project3.herokuapp.com/appointments"; //TODO change this to remote
   private readonly emailURL = "http://localhost:3001/email";
 
   constructor(private http:HttpClient) { }
