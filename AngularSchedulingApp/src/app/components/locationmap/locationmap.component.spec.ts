@@ -80,7 +80,7 @@ describe('LocationmapComponent', () => {
 
   it('should call the useMyLocation method', async () => {
     spyOn(component, 'useMyLocation');
-    el = fixture.debugElement.query(By.css('.btn.col-sm-4')).nativeElement;
+    el = fixture.debugElement.query(By.css('.btn.currentLocationButton')).nativeElement;
     el.click();
     expect(component.useMyLocation).toHaveBeenCalledTimes(1);
     //Test passes if the method has been called
