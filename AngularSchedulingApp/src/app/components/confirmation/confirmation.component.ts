@@ -49,26 +49,28 @@ export class ConfirmationComponent implements OnInit {
     console.log(this.appointment);                                    //temp log for troubleshooting                               
     this.updateInitialFormInfo();
     this.appointment.booked = true;
-    this.confirmServ.postAppt(this.appointment).subscribe(data => {
-      console.log(data);                                              //temp log for troubleshooting
+    this.confirmationAppt();
+    this.sendConfirmationEmail();  
+  }
+
+  confirmationAppt(): void{
+    this.confirmServ.postAppt(this.appointment).subscribe(data => {                                         
       this.apptTransfer.setAppt(this.appointment);                 
-      this.displaySummary();                                          
-      this.sendConfirmationEmail();                                                                                                                                                 
+      this.transComplete = true;                                                                                                                                                                                         
     }, error => {                 //if error, appt is not marked as booked. display message or redirect?
       this.appointment.booked = false;
       this.apptTransfer.setAppt(this.appointment);                                
-      console.log(error);                                             //temp log for troubleshooting
+      console.log(error);                                             
       this.postError = true;
     });
   }
 
-  displaySummary(): void{
-    this.transComplete = true;
-    //display reformatting can go here otherwise maybe move above line back to submitForm
-  }
-
   sendConfirmationEmail(): void{
-    //looks like this will be an http request, but still looking into it
+    console.log("in send email function");
+    this.confirmServ.sendMail(this.appointment).subscribe(data => {                                                                                                                                              
+    }, error => {                                  //TODO display message in summary that email didnt send         
+      console.log(error);                                             
+    });
   }
 
   navToMap(): void{
