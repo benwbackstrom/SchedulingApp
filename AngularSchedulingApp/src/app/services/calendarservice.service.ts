@@ -10,6 +10,6 @@ export class CalendarserviceService {
   constructor(private http: HttpClient) { }
 
   getTimes():Observable<any>{//maps javascript api
-    return this.http.get('http://localhost:3000/times') as Observable<any>;
+    return this.http.get('https://json-server-project3.herokuapp.com/times') as Observable<any>;
   }
 }

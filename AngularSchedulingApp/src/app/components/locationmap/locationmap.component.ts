@@ -172,7 +172,7 @@ export class LocationmapComponent implements OnInit {
   //populate new array in the beginning to have distance variable
   populateLocationArray(addressArray:any):void{
     for(let location of addressArray){
-      this.aptLocationArray.push(new Locationmodel(location.address1 + " " + location.city + " " + location.state + " " + location.postalCode , location.coordinates.lat, location.coordinates.lng, -1));
+      this.aptLocationArray.push(new Locationmodel(location.address1 + " " + location.city + " " + location.state + " " + location.postalCode , location.coordinates.lat, location.coordinates.lng, -1, location.name));
     }
     console.log(this.aptLocationArray);
   }

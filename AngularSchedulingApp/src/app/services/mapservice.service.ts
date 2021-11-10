@@ -18,7 +18,7 @@ export class MapserviceService {
   }
 
   getAddresses():Observable<any>{//maps javascript api
-    return this.http.get('http://localhost:3000/addresses') as Observable<any>;
+    return this.http.get('https://json-server-project3.herokuapp.com/addresses') as Observable<any>;
   }
 /*
   getDistance(origin:any, destination:any):Observable<any>{//distance matric api

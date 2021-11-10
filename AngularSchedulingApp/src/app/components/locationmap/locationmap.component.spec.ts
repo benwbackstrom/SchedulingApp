@@ -87,7 +87,7 @@ describe('LocationmapComponent', () => {
   })
 
   it('should call the goLocation method', async () => {
-    component.storeLocation = new Locationmodel("8055 Churchill Way, Dallas, TX 75251", 32.919567, -96.768389, 10); //just making a location to make this nonnull
+    component.storeLocation = new Locationmodel("8055 Churchill Way, Dallas, TX 75251", 32.919567, -96.768389, 10, 'United States Postal Service'); //just making a location to make this nonnull
     fixture.detectChanges();
 
     spyOn(component, 'goLocation');
