@@ -45,6 +45,7 @@ export class ConfirmationComponent implements OnInit {
       time: [{value:MilitaryToRegularTimePipe.prototype.transform(this.appointment.time), disabled:true}]
     });
     this.postError = false;
+    this.emailStatus = 0;
   }
 
   submitForm(){                     //on submit adjust appointment object and send to confirm service
@@ -69,8 +70,7 @@ export class ConfirmationComponent implements OnInit {
 
   sendConfirmationEmail(): void{
     this.confirmServ.sendMail(this.appointment).subscribe(data => {
-      this.emailStatus = 1;
-      console.log("wth?");                                                                                                                                            
+      this.emailStatus = 1;                                                                                                                                            
     }, error => {
       this.emailStatus = 2;                                  //TODO display message in summary that email didnt send         
       console.log(error);                                             
