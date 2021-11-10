@@ -44,7 +44,7 @@
                             <!-- location address -->
                             <div class="w-25">{{location.formatted_address}}</div>
                             <!-- location distance -->
-                            <div class="">{{location.distance | meterToMile | number:'.2'}}</div>
+                            <div class="">{{location.distance | meterToMile | number:'.2'}} mi</div>
                             <!-- location select button -->
                             <button class="btn my-btn chooseLocation" (click)="chooseLocation(location)">Choose</button>
                         </div>
