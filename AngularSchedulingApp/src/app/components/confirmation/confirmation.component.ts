@@ -32,8 +32,8 @@ export class ConfirmationComponent implements OnInit {
 
   ngOnInit(): void {                                                  //on init, populate form with current                     
     this.informationForm = this.formBuilder.group({                   //appointment data. Location, date, time
-      firstName: [this.appointment.firstName, Validators.required],   //disabled. Must return to map and/or
-      lastName: [this.appointment.lastName, Validators.required],     //calendar feature to change
+      firstName: [this.appointment.firstName, [Validators.required, Validators.pattern(/^[^0-9_!¡?÷?¿/\\+=@#$%ˆ&*(){}|~<>;:[\]]{2,}/)]],   //disabled. Must return to map and/or
+      lastName: [this.appointment.lastName, [Validators.required, Validators.pattern(/^[^0-9_!¡?÷?¿/\\+=@#$%ˆ&*(){}|~<>;:[\]]{2,}/)]],     //calendar feature to change
       email: [this.appointment.email, [Validators.required, Validators.pattern(/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/)]],
       phoneNumber: [
         this.appointment.phoneNumber, 
