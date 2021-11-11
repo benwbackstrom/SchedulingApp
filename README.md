@@ -26,6 +26,8 @@ PassportPassport! is a scheduling application that allows you to sign up for an 
 * Within a Git Bash terminal in the AngularSchedlingApp folder, type `ng serve -o`
 * Alternatively follow this link: [https://revp3cicd.uw.r.appspot.com/](https://revp3cicd.uw.r.appspot.com/)
 
+* Git hub to address location: https://github.com/ptrcktylr/json-server
+
 ## Usage
 
 Once navigated to the webpage, all functionality is available to the user.
