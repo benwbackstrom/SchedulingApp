@@ -11,6 +11,8 @@ PassportPassport! is a scheduling application that allows you to sign up for an 
 * Karma
 * GCP Google Maps Platform
 * Json Server
+* GCP Cloud Storage
+* GCP App Engine
 
 ## Features
 
