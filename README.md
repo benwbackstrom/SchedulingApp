@@ -22,6 +22,7 @@ PassportPassport! is a scheduling application that allows you to sign up for an 
    
 * `git clone https://github.com/benwbackstrom/SchedulingApp.git`
 * Within a Git Bash terminal in the AngularSchedlingApp folder, type `ng serve -o`
+* Alternatively follow this link: [https://revp3cicd.uw.r.appspot.com/](https://revp3cicd.uw.r.appspot.com/)
 
 ## Usage
 
